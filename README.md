@@ -1,6 +1,6 @@
 <br />
 <p align="center">
-    <img src="https://static.vecteezy.com/system/resources/thumbnails/001/200/107/small/book.png" alt="Logo" width="230" height="100">
+    <img src="https://static.vecteezy.com/system/resources/thumbnails/001/200/107/small/book.png" alt="Logo" width="230" height="105">
 
   <h1 align="center">Book Store</h1>
 
@@ -31,6 +31,10 @@ Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
 <img src="https://i.imgur.com/JN8pF7I.png">
 <p>Slika 1 - Predvidena strukturna zasnova mikrostoritve CatalogService</p>
 
+* Aplikacijska plast: iskanje knjig, podrobnosti o knjigah, priporočila za knjige, wishlist.
+* Domenska plast: entiteta knjiga, repozitorij knjig, knjižna storitev.
+* Infrastrukturna plast: podatkovna baza knjig, API za knjige
+
 | Funkcionalne zahteve                                                            | Nefunkcionalne zahteve                                                    |
 |---------------------------------------------------------------------------------|---------------------------------------------------------------------------|
 | Možnost iskanja knjig na podlagi različnih meril, kot so naslov, avtor in žanr. | Visoka razpoložljivost in zanesljivost                                    |
@@ -42,6 +46,10 @@ Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
 <img src="https://i.imgur.com/qxrYO9n.png">
 <p>Slika 2 - Predvidena strukturna zasnova mikrostoritve OrderService</p>
 
+* Aplikacijska plast: nakupovalna košarica, postopek blagajne, zgodovina naročil.
+* Domenska plast: entiteta naročilo, repozitorij naročil, storitev naročila.
+* Infrastrukturna plast: podatkovna baza naročil, API za naročila.
+
 | Funkcionalne zahteve                                      | Nefunkcionalne zahteve                                                        |
 |-----------------------------------------------------------|-------------------------------------------------------------------------------|
 | Možnost dodajanja in odstranjevanja elementov iz košarice | Varna in zanesljiva obdelava naročila                                         |
@@ -52,6 +60,10 @@ Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
 
 <img src="https://i.imgur.com/PRrZnao.png">
 <p>Slika 3 - Predvidena strukturna zasnova mikrostoritve UserService</p>
+
+Aplikacijska plast: prijava uporabnika, registracija uporabnika, profil uporabnika.
+Domenska plast: entiteta uporabnik, repozitorij uporabnikov, uporabniška storitev.
+Infrastrukturna raven: storitev avtentikacije in avtorizacije, podatkovna baza uporabnikov, uporabniški vmesnik API.
 
 | Funkcionalne zahteve                                                                                                                 | Nefunkcionalne zahteve                                                 |
 |--------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
