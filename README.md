@@ -61,9 +61,9 @@ Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
 <img src="https://i.imgur.com/PRrZnao.png">
 <p>Slika 3 - Predvidena strukturna zasnova mikrostoritve UserService</p>
 
-Aplikacijska plast: prijava uporabnika, registracija uporabnika, profil uporabnika.
-Domenska plast: entiteta uporabnik, repozitorij uporabnikov, uporabniška storitev.
-Infrastrukturna raven: storitev avtentikacije in avtorizacije, podatkovna baza uporabnikov, uporabniški vmesnik API.
+* Aplikacijska plast: prijava uporabnika, registracija uporabnika, profil uporabnika.
+* Domenska plast: entiteta uporabnik, repozitorij uporabnikov, uporabniška storitev.
+* Infrastrukturna plast: storitev avtentikacije in avtorizacije, podatkovna baza uporabnikov, uporabniški vmesnik API.
 
 | Funkcionalne zahteve                                                                                                                 | Nefunkcionalne zahteve                                                 |
 |--------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
