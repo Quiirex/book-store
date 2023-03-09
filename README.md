@@ -28,7 +28,7 @@ Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
 
 ## CatalogService
 
-<img src="https://i.imgur.com/JN8pF7I.png">
+<img src="https://i.imgur.com/OyYOaF1.png">
 <p>Slika 1 - Predvidena strukturna zasnova mikrostoritve CatalogService</p>
 
 * Aplikacijska plast: iskanje knjig, podrobnosti o knjigah, priporočila za knjige, wishlist.
