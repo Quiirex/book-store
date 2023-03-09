@@ -9,10 +9,10 @@ import (
 func GetConfig() {
 	viper.SetConfigName("app")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./configurations")
+	viper.AddConfigPath("app.yaml")
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatal("config error: ", err.Error())
+		log.Fatal("Config error: ", err.Error())
 	}
 }
