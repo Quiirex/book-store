@@ -1,7 +1,7 @@
 package api
 
 import (
-	"user-service/api/middleware"
+	"user-service/application/middleware"
 	"user-service/domain/handler"
 	"user-service/domain/repository"
 	"user-service/domain/service"

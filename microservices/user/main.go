@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	"user-service/api"
+	api "user-service/application"
 	"user-service/infrastructure/config"
 	"user-service/infrastructure/database"
 
