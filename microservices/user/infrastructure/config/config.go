@@ -7,9 +7,9 @@ import (
 )
 
 func GetConfig() {
-	viper.SetConfigName("app")
+	viper.SetConfigName("App")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("app.yaml")
+	viper.AddConfigPath("infrastructure/config")
 
 	err := viper.ReadInConfig()
 	if err != nil {
