@@ -2,14 +2,11 @@ App:
   Port: 5000
 
 Database:
-  Host: "127.00.0.1"
+  Host: "user-service-db.mysql.database.azure.com"
   Port: 3306
-  Username: "root"
-  Password: "p455w0rd"
-  DBName: "user-service"
-
-Files:
-  Path: "./files"
+  Username: "userServiceAdmin"
+  Password: "Mlinaric99!"
+  DBName: "user_db"
 
 Jwt:
   Secret: "ToJeSuperMocenSkrivniKljuc123!"
