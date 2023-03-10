@@ -38,8 +38,10 @@ func (s *UserService) GetListUser() (*[]entity.UserViewModel, error) {
 	for _, item := range result {
 		var user entity.UserViewModel
 		user.Email = item.Email
-		user.FullName = fmt.Sprintf("%s %s", item.FirstName, item.LastName)
+		user.FirstName = item.FirstName
+		user.LastName = item.LastName
 		user.Email = item.Email
+		user.Address = item.Address
 		users = append(users, user)
 	}
 
@@ -56,9 +58,11 @@ func (s *UserService) GetDetailUser(id int) (*entity.UserViewModel, error) {
 
 	if result != nil {
 		viewModel = entity.UserViewModel{
-			ID:       result.ID,
-			FullName: fmt.Sprintf("%s %s", result.FirstName, result.LastName),
-			Email:    result.Email,
+			ID:        result.ID,
+			FirstName: result.FirstName,
+			LastName:  result.LastName,
+			Email:     result.Email,
+			Address:   result.Address,
 		}
 	}
 
@@ -70,6 +74,7 @@ func (s *UserService) SaveUser(userVM *entity.ReqisterViewModel) (*entity.UserVi
 		FirstName: userVM.FirstName,
 		LastName:  userVM.LastName,
 		Email:     userVM.Email,
+		Address:   userVM.Address,
 	}
 
 	password, err := user.EncryptPassword(userVM.Password)
@@ -88,9 +93,11 @@ func (s *UserService) SaveUser(userVM *entity.ReqisterViewModel) (*entity.UserVi
 
 	if result != nil {
 		afterRegVM = entity.UserViewModel{
-			ID:       result.ID,
-			FullName: fmt.Sprintf("%s %s", result.FirstName, result.LastName),
-			Email:    result.Email,
+			ID:        result.ID,
+			FirstName: result.FirstName,
+			LastName:  result.LastName,
+			Email:     result.Email,
+			Address:   result.Address,
 		}
 	}
 
@@ -110,12 +117,12 @@ func (s *UserService) UpdateUser(userVM *entity.User) (*entity.UserViewModel, er
 		return nil, err
 	}
 
-	var userAfterUpdate entity.UserViewModel
-
-	userAfterUpdate = entity.UserViewModel{
-		ID:       result.ID,
-		FullName: fmt.Sprintf("%s %s", result.FirstName, result.LastName),
-		Email:    result.Email,
+	userAfterUpdate := entity.UserViewModel{
+		ID:        result.ID,
+		FirstName: result.FirstName,
+		LastName:  result.LastName,
+		Email:     result.Email,
+		Address:   result.Address,
 	}
 
 	return &userAfterUpdate, err
@@ -139,7 +146,7 @@ func (s *UserService) GetUserByEmailPassword(loginVM entity.LoginViewModel) (*en
 	// Verify Password
 	err = security.VerifyPassword(result.Password, loginVM.Password)
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
-		return nil, fmt.Errorf("Incorrect Password. Error %s", err.Error())
+		return nil, fmt.Errorf("incorrect password. error %s", err.Error())
 	}
 
 	return result, nil

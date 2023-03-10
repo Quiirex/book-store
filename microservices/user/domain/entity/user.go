@@ -29,9 +29,11 @@ type LoginViewModel struct {
 }
 
 type UserViewModel struct {
-	ID       int    `json:"id"`
-	FullName string `json:"full_name"`
-	Email    string `json:"email"`
+	ID        int    `json:"id"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email"`
+	Address   string `json:"address"`
 }
 
 func (u *User) EncryptPassword(password string) (string, error) {
