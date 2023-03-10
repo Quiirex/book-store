@@ -73,5 +73,6 @@ Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
 
 ## Uporabljene tehnologije
 
+* [Golang](https://go.dev/)
 * [Kotlin](https://kotlinlang.org/)
 * [React](https://reactjs.org/)
