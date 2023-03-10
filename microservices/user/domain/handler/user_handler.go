@@ -158,7 +158,7 @@ func (h *UserHandler) Login(c *gin.Context) {
 
 	userData := map[string]interface{}{
 		"access_token": token.AccessToken,
-		"expired":      token.ExpiredToken,
+		"expires":      token.ExpiredToken,
 		"user_id":      validateUser.ID,
 	}
 
