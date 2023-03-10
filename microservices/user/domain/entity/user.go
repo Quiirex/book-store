@@ -12,6 +12,7 @@ type User struct {
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
+	Address   string `json:"address"`
 }
 
 type ReqisterViewModel struct {
@@ -19,6 +20,7 @@ type ReqisterViewModel struct {
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
+	Address   string `json:"address"`
 }
 
 type LoginViewModel struct {
@@ -99,6 +101,9 @@ func (u *ReqisterViewModel) Validate() map[string]string {
 		if err = checkmail.ValidateFormat(u.Email); err != nil {
 			errorMessages["invalid_email"] = "please provide a valid email"
 		}
+	}
+	if u.Address == "" {
+		errorMessages["address_required"] = "address is required"
 	}
 
 	return errorMessages

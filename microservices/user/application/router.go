@@ -19,7 +19,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	userService := service.NewUserService(userRepo)
 	userHandler := handler.NewUserHandler(userService)
 
-	user := router.Group("v1/user")
+	user := router.Group("api/user")
 	{
 		user.GET("/", middleware.CORSMiddleware(), userHandler.GetAllUser)
 		user.GET("/:user_id", middleware.AuthMiddleware(), middleware.CORSMiddleware(), userHandler.GetDetailUser)

@@ -22,7 +22,7 @@ type AccessDetail struct {
 
 func CreateToken(userid int64) (*TokenDetail, error) {
 	td := &TokenDetail{}
-	td.ExpiredToken = time.Now().Add(time.Minute * 15).Unix()
+	td.ExpiredToken = time.Now().Add(time.Hour * 24).Unix()
 	var err error
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
@@ -51,7 +51,7 @@ func VerifyToken(r *http.Request) (*jwt.Token, error) {
 	tokenString := ExtractToken(r)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("Wrong signature method")
+			return nil, fmt.Errorf("wrong signature method")
 		}
 		return []byte(viper.GetString("Jwt.Secret")), nil
 	})
