@@ -10,7 +10,7 @@ RUN go mod download
 COPY . .
 
 # Build the binary with support for CGO_ENABLED=0
-RUN CGO_ENABLED=0 go build -o book-store ./main.go
+RUN CGO_ENABLED=0 go build -o user-service ./main.go
 
 # Start from a smaller base image for production
 FROM alpine:3.15
@@ -19,7 +19,7 @@ FROM alpine:3.15
 WORKDIR /app
 
 # Copy the binary from the builder stage
-COPY --from=builder /app/book-store .
+COPY --from=builder /app/user-service .
 
 # Copy the App.yaml file from the project directory to the container
 COPY infrastructure/config/App.yaml /app/infrastructure/config/App.yaml
@@ -28,4 +28,4 @@ COPY infrastructure/config/App.yaml /app/infrastructure/config/App.yaml
 EXPOSE 5000
 
 # Run the binary
-CMD ["./book-store"]
+CMD ["./user-service"]
