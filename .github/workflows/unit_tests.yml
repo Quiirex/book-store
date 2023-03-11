@@ -1,21 +1,22 @@
-name: Unit Tests
+name: Unit tests
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  unit-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.17
-
-    - name: Run Unit Tests
-      run: go test ./microservices/user/test
+        go-version: 1.17.x
+    - name: Install dependencies
+      run: |
+        cd microservices/user
+        go mod download
+    - name: Run unit tests
+      run: |
+        cd microservices/user
+        go test ./test
