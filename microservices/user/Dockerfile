@@ -1,31 +1,17 @@
-# Use an official Golang runtime as a parent image
+# Use a small Golang image for the builder stage
 FROM golang:1.17.3-alpine3.15 AS builder
-
-# Set the working directory to /app
+ENV CGO_ENABLED=0
 WORKDIR /app
-
-# Copy the necessary files into the container at /app
 COPY go.mod go.sum ./
-RUN go mod download
+RUN go mod download && \
+    go mod verify
 COPY . .
+RUN go build -o user-service ./main.go
 
-# Build the binary with support for CGO_ENABLED=0
-RUN CGO_ENABLED=0 go build -o user-service ./main.go
-
-# Start from a smaller base image for production
-FROM alpine:3.15
-
-# Set the working directory to /app
+# Use a smaller base image for the production stage
+FROM scratch
 WORKDIR /app
-
-# Copy the binary from the builder stage
-COPY --from=builder /app/user-service .
-
-# Copy the App.yaml file from the project directory to the container
+COPY --from=builder /app/user-service /app/
 COPY infrastructure/config/App.yaml /app/infrastructure/config/App.yaml
-
-# Expose port 5000
 EXPOSE 5000
-
-# Run the binary
 CMD ["./user-service"]
