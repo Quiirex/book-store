@@ -1,4 +1,4 @@
-package com.bookstore.catalog.infrastructure
+package com.bookstore.catalog.infrastructure.database
 
 import com.bookstore.catalog.domain.model.Book
 import com.bookstore.catalog.domain.repository.BookRepository
