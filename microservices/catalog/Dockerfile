@@ -8,5 +8,5 @@ RUN gradle build --no-daemon
 FROM openjdk:17-slim-buster
 WORKDIR /app
 COPY --from=build /home/gradle/src/build/libs/*.jar app.jar
-EXPOSE 6000
+EXPOSE 7000
 ENTRYPOINT ["java","-jar","app.jar"]
