@@ -29,5 +29,5 @@ jobs:
         go test ./test
     - name: Run Kotlin unit tests
       run: |
-        cd ../catalog
+        cd microservices/catalog
         ./gradlew test
