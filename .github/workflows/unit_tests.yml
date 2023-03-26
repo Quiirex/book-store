@@ -23,9 +23,11 @@ jobs:
         go mod download
         cd ../catalog
         ./gradlew assemble
-    - name: Run unit tests
+    - name: Run GO unit tests
       run: |
         cd microservices/user
         go test ./test
+    - name: Run Kotlin unit tests
+      run: |
         cd ../catalog
         ./gradlew test
