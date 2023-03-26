@@ -1,8 +1,6 @@
 name: Unit tests
 
-on:
-  push:
-    branches: [ main ]
+on: [push]
 
 jobs:
   test:
@@ -10,29 +8,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.17.x
-
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: corretto
+        java-version: 17
     - name: Install dependencies
       run: |
         cd microservices/user
         go mod download
-
-    - name: Run Go unit tests
+        cd ../catalog
+        ./gradlew assemble
+    - name: Run unit tests
       run: |
         cd microservices/user
         go test ./test
-
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt@1.17'
-        java-version: 17
-
-    - name: Build and test Kotlin project
-      run: |
-        cd microservices/catalog
+        cd ../catalog
         ./gradlew test
