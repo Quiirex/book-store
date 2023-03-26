@@ -8,15 +8,33 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.17.x
-    - name: Install dependencies
+
+    - name: Install Go dependencies
       run: |
         cd microservices/user
         go mod download
-    - name: Run unit tests
+
+    - name: Run Go unit tests
       run: |
         cd microservices/user
         go test ./test
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+
+    - name: Build Kotlin project
+      run: |
+        cd microservices/catalog
+        ./gradlew build --no-daemon
+
+    - name: Run Kotlin unit tests
+      run: |
+        cd microservices/catalog
+        ./gradlew test --no-daemon
