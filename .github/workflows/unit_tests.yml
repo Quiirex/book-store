@@ -12,24 +12,24 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: 1.17.x
-    - name: Set up JDK
+    - name: Set up Java
       uses: actions/setup-java@v2
       with:
         java-version: 17
         distribution: 'adopt'
-    - name: Install GO dependencies
+    - name: Install User service dependencies
       run: |
         cd microservices/user
         go mod download
-    - name: Install Kotlin dependencies
-      run: |
-        cd microservices/catalog
-        ./gradlew assemble
-    - name: Run GO unit tests
+    - name: Run User service unit tests
       run: |
         cd microservices/user
         go test ./test
-    - name: Run Kotlin unit tests
+    - name: Install Catalog service dependencies
+      run: |
+        cd microservices/catalog
+        ./gradlew assemble
+    - name: Run Catalog service unit tests
       run: |
         cd microservices/catalog
         ./gradlew test
