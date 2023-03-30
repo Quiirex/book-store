@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 plugins {
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.allopen") version "1.7.22"
@@ -37,8 +39,21 @@ java {
 }
 
 tasks.withType<Test> {
+    useJUnitPlatform()
+
+    testLogging {
+        events("PASSED", "FAILED", "SKIPPED")
+        showExceptions = true
+        exceptionFormat = TestExceptionFormat.FULL
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
+    }
+
     systemProperty("java.util.logging.manager", "org.jboss.logmanager.LogManager")
+
 }
+
 allOpen {
     annotation("javax.ws.rs.Path")
     annotation("javax.enterprise.context.ApplicationScoped")
