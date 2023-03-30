@@ -1,4 +1,4 @@
-package com.bookstore.domain.repository
+package com.bookstore.infrastructure.repository
 
 import com.bookstore.domain.model.Order
 import io.quarkus.mongodb.panache.kotlin.reactive.ReactivePanacheMongoRepository

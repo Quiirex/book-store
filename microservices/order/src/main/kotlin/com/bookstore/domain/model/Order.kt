@@ -6,12 +6,12 @@ import java.time.LocalDate
 
 @MongoEntity(collection = "Orders")
 class Order {
-    val id: ObjectId? = null
-    val orderDate: LocalDate? = null
-    val orderNumber: String? = null
-    val orderStatus: String? = null
-    val orderTotal: Double? = null
-    val orderList: List<Book>? = null
-    val shippingAddress: String? = null
-    val customerId: String? = null
+    var id: ObjectId? = null
+    var orderDate: LocalDate? = null
+    var orderNumber: String? = null
+    var orderStatus: String? = null
+    var orderTotal: Double? = null
+    var orderList: List<Book>? = null
+    var shippingAddress: String? = null
+    var customerId: String? = null
 }
