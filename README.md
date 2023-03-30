@@ -1,4 +1,5 @@
 <br />
+[![Unit tests](https://github.com/Quiirex/book-store/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/Quiirex/book-store/actions/workflows/unit_tests.yml)
 <p align="center">
   <h1 align="center">Book Store</h1>
 
