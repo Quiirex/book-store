@@ -33,3 +33,11 @@ jobs:
       run: |
         cd microservices/catalog
         ./gradlew test
+    - name: Install Order service dependencies
+      run: |
+        cd microservices/order
+        ./gradlew build
+    - name: Run Order service unit tests
+      run: |
+        cd microservices/order
+        ./gradlew test
