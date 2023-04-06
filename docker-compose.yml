@@ -9,6 +9,7 @@ services:
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin123
+    restart: always
   order-service:
     image: quiirex/order-service:v2
     ports:
@@ -19,6 +20,7 @@ services:
     #   - DB_HOST=db
     #   - DB_USER=order_user
     #   - DB_PASSWORD=order_password
+    restart: always
   catalog-service:
     image: quiirex/catalog-service:v2
     ports:
@@ -29,6 +31,7 @@ services:
     #   - DB_HOST=db
     #   - DB_USER=catalog_user
     #   - DB_PASSWORD=catalog_password
+    restart: always
   user-service:
     image: quiirex/user-service:v2
     ports:
@@ -39,6 +42,7 @@ services:
     #   - DB_HOST=db
     #   - DB_USER=user_user
     #   - DB_PASSWORD=user_password
+    restart: always
 volumes:
   rabbitmq_data:
   order_data:
