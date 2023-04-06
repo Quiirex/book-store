@@ -1,0 +1,46 @@
+version: '3'
+services:
+  rabbitmq:
+    image: arm64v8/rabbitmq:3
+    ports:
+      - "5672:5672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123
+  order-service:
+    image: quiirex/order-service:v2
+    ports:
+      - "8000:8000"
+    volumes:
+      - order_data:/app/data
+    # environment:
+    #   - DB_HOST=db
+    #   - DB_USER=order_user
+    #   - DB_PASSWORD=order_password
+  catalog-service:
+    image: quiirex/catalog-service:v2
+    ports:
+      - "7000:7000"
+    volumes:
+      - catalog_data:/app/data
+    # environment:
+    #   - DB_HOST=db
+    #   - DB_USER=catalog_user
+    #   - DB_PASSWORD=catalog_password
+  user-service:
+    image: quiirex/user-service:v2
+    ports:
+      - "5000:5000"
+    volumes:
+      - user_data:/app/data
+    # environment:
+    #   - DB_HOST=db
+    #   - DB_USER=user_user
+    #   - DB_PASSWORD=user_password
+volumes:
+  rabbitmq_data:
+  order_data:
+  catalog_data:
+  user_data:
