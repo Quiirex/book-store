@@ -3,6 +3,8 @@ package com.bookstore.catalog
 import com.bookstore.catalog.application.controller.BookController
 import com.bookstore.catalog.domain.model.Book
 import com.bookstore.catalog.domain.service.BookService
+import com.bookstore.catalog.infrastructure.utils.LogMessageConverter
+import com.bookstore.catalog.mock.MockRMQPublisher
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.BDDMockito.given
@@ -20,13 +22,19 @@ class CatalogApplicationTests {
 
     private lateinit var controller: BookController
 
+    private lateinit var mockRMQPublisher: MockRMQPublisher
+
+    private lateinit var logMessageConverter: LogMessageConverter
+
     @Mock
     private lateinit var bookService: BookService
 
     @BeforeEach
     fun setUp() {
         initMocks(this)
-        controller = BookController(bookService)
+        mockRMQPublisher = MockRMQPublisher()
+        logMessageConverter = LogMessageConverter()
+        controller = BookController(bookService, mockRMQPublisher, logMessageConverter)
     }
 
     @Test

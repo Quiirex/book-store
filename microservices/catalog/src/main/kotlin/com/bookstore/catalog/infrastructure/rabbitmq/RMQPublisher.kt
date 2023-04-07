@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
-class RMQPublisher @Autowired constructor(private val rabbitTemplate: RabbitTemplate) {
+class RMQPublisher @Autowired constructor(private val rabbitTemplate: RabbitTemplate?) {
     @Value("\${rabbitmq.exchange}")
     private val exchange: String? = null
 
     @Value("\${rabbitmq.routingkey}")
     private val routingKey: String? = null
     fun send(logMessage: String?) {
-        rabbitTemplate.convertAndSend(exchange!!, routingKey!!, logMessage!!)
+        rabbitTemplate?.convertAndSend(exchange!!, routingKey!!, logMessage!!)
     }
 }
 
