@@ -7,9 +7,6 @@ services:
       - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
-    environment:
-      - RABBITMQ_DEFAULT_USER=admin
-      - RABBITMQ_DEFAULT_PASS=admin123
     restart: always
   order-service:
     image: quiirex/order-service:v2
@@ -28,10 +25,14 @@ services:
       - "7000:7000"
     volumes:
       - catalog_data:/app/data
-    # environment:
-    #   - DB_HOST=db
-    #   - DB_USER=catalog_user
-    #   - DB_PASSWORD=catalog_password
+    environment:
+      - SPRING_MONGODB_URI=mongodb+srv://Quiirex:Mh1pvc6Th23Kf990@cluster0.uer8zqi.mongodb.net/?retryWrites=true&w=majority
+      - SPRING_MONGODB_DATABASE=CatalogService
+      - SPRING_RABBITMQ_ADDRESSES=localhost:5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - RABBITMQ_EXCHANGE=catalog-service
+      - RABBITMQ_ROUTINGKEY=zelovarenkey
     restart: always
   user-service:
     image: quiirex/user-service:v2
