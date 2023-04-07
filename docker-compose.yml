@@ -1,7 +1,7 @@
 version: '3'
 services:
   rabbitmq:
-    image: arm64v8/rabbitmq:3
+    image: arm64v8/rabbitmq:3-management
     ports:
       - "5672:5672"
       - "15672:15672"
