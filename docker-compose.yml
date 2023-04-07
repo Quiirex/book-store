@@ -4,6 +4,7 @@ services:
     image: arm64v8/rabbitmq:3
     ports:
       - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     environment:
