@@ -76,4 +76,10 @@ Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
 
 - [Golang](https://go.dev/)
 - [Kotlin](https://kotlinlang.org/)
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Quarkus](https://quarkus.io/)
 - [React](https://reactjs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [MySQL](https://www.mysql.com/)
+- [Docker](https://www.docker.com/)
+- [RabbitMQ](https://www.rabbitmq.com/)
