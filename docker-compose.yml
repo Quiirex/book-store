@@ -20,11 +20,13 @@ services:
     #   - DB_PASSWORD=order_password
     restart: always
   catalog-service:
-    image: quiirex/catalog-service:v2
+    image: quiirex/catalog-service:v3
     ports:
       - "7000:7000"
     volumes:
       - catalog_data:/app/data
+    depends_on:
+      - rabbitmq
     # environment:
     #   - DB_HOST=db
     #   - DB_USER=catalog_user
