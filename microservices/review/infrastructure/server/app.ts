@@ -53,7 +53,7 @@ server.bindAsync(
     server.start();
     connectToDatabase();
     console.log(
-      `Review service gRPC server listening on 'http://localhost:${port}'`,
+      `> Review service gRPC server listening on 'http://localhost:${port}'`,
     );
   },
 );
