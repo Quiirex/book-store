@@ -1,0 +1,15 @@
+{
+  "name": "blog-service",
+  "version": "1.0.0",
+  "description": "Microservice gRPC CRUD API for blog posts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Luka Mlinarič",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}

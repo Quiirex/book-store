@@ -11,6 +11,18 @@ services:
     restart: always
     networks:
       - my-network
+  postgres:
+    image: arm64v8/postgres
+    container_name: postgres
+    ports:
+      - '5432:5432'
+    restart: always
+    networks:
+      - my-network
+    env_file:
+      - ./.env
+    volumes:
+      - postgres_data:/var/lib/postgresql
   order-service:
     image: quiirex/order-service:v2
     container_name: order-service
@@ -18,10 +30,6 @@ services:
       - "8000:8000"
     volumes:
       - order_data:/app/data
-    # environment:
-    #   - DB_HOST=db
-    #   - DB_USER=order_user
-    #   - DB_PASSWORD=order_password
     restart: always
     networks:
       - my-network
@@ -34,10 +42,6 @@ services:
       - catalog_data:/app/data
     depends_on:
       - rabbitmq
-    # environment:
-    #   - DB_HOST=db
-    #   - DB_USER=catalog_user
-    #   - DB_PASSWORD=catalog_password
     restart: always
     networks:
       - my-network
@@ -48,15 +52,12 @@ services:
       - "5000:5000"
     volumes:
       - user_data:/app/data
-    # environment:
-    #   - DB_HOST=db
-    #   - DB_USER=user_user
-    #   - DB_PASSWORD=user_password
     restart: always
     networks:
       - my-network
 volumes:
   rabbitmq_data:
+  postgres_data:
   order_data:
   catalog_data:
   user_data:
