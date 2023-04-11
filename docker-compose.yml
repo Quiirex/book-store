@@ -4,8 +4,8 @@ services:
     image: arm64v8/rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - '5672:5672'
+      - '15672:15672'
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     restart: always
@@ -18,7 +18,7 @@ services:
       - '5432:5432'
     restart: always
     env_file:
-      - ./.env
+      - microservices/blog/.env
     volumes:
       - postgres_data:/var/lib/postgresql
     networks:
@@ -27,7 +27,7 @@ services:
     image: quiirex/order-service:v2
     container_name: order-service
     ports:
-      - "8000:8000"
+      - '8000:8000'
     volumes:
       - order_data:/app/data
     restart: always
@@ -37,7 +37,7 @@ services:
     image: quiirex/catalog-service:v3
     container_name: catalog-service
     ports:
-      - "7000:7000"
+      - '7000:7000'
     volumes:
       - catalog_data:/app/data
     depends_on:
@@ -49,7 +49,7 @@ services:
     image: quiirex/user-service:v2
     container_name: user-service
     ports:
-      - "5000:5000"
+      - '5000:5000'
     volumes:
       - user_data:/app/data
     restart: always
