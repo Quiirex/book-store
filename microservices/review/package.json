@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start:server": "ts-node-dev --respawn --transpile-only infrastructure/server/app.ts",
-    "db:migrate": "npx prisma migrate dev --name post-entity --create-only --schema ./infrastructure/server/prisma/schema.prisma",
-    "db:generate": " npx prisma generate --schema ./infrastructure/server/prisma/schema.prisma",
-    "db:push": "npx prisma db push --schema ./infrastructure/server/prisma/schema.prisma",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:prod": "ts-node-dev --respawn --transpile-only infrastructure/server/app.ts",
+    "db:migrate": "npx prisma migrate dev --name post-entity --create-only --schema ./prisma/schema.prisma",
+    "db:generate": " npx prisma generate --schema ./prisma/schema.prisma",
+    "db:push": "npx prisma db push --schema ./prisma/schema.prisma",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
   "keywords": [
     "microservice",
