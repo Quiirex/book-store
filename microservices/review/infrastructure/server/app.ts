@@ -11,11 +11,9 @@ import {
   updateReviewHandler,
 } from '../../application/controller/reviewController';
 import { ReviewServiceHandlers } from '../pb/ReviewService';
-import { CreateReviewRequest__Output } from '../pb/CreateReviewRequest';
-import { ReviewResponse } from '../pb/ReviewResponse';
-import connectDB from './util/prisma';
+import connectToDatabase from './util/prisma';
 
-const options: protoLoader.Options = {
+const options = {
   keepCase: true,
   longs: String,
   enums: String,
@@ -23,7 +21,7 @@ const options: protoLoader.Options = {
   oneofs: true,
 };
 
-const PORT = customConfig.port;
+const { port } = customConfig;
 const PROTO_FILE = '../../domain/proto/services.proto';
 const packageDef = protoLoader.loadSync(
   path.resolve(__dirname, PROTO_FILE),
@@ -37,17 +35,15 @@ const proto = grpc.loadPackageDefinition(
 const server = new grpc.Server();
 
 server.addService(proto.ReviewService.service, {
-  CreateReview: (
-    req: grpc.ServerUnaryCall<CreateReviewRequest__Output, ReviewResponse>,
-    res: grpc.sendUnaryData<ReviewResponse>,
-  ) => createReviewHandler(req, res),
+  CreateReview: (req, res) => createReviewHandler(req, res),
   UpdateReview: (req, res) => updateReviewHandler(req, res),
   DeleteReview: (req, res) => deleteReviewHandler(req, res),
   GetReview: (req, res) => findReviewHandler(req, res),
   GetReviews: (call) => findAllReviewsHandler(call),
 } as ReviewServiceHandlers);
+
 server.bindAsync(
-  `0.0.0.0:${PORT}`,
+  `0.0.0.0:${port}`,
   grpc.ServerCredentials.createInsecure(),
   (err, port) => {
     if (err) {
@@ -55,9 +51,9 @@ server.bindAsync(
       return;
     }
     server.start();
-    connectDB();
+    connectToDatabase();
     console.log(
-      `> Review service gRPC server listening on 'http://localhost:${port}'`,
+      `Review service gRPC server listening on 'http://localhost:${port}'`,
     );
   },
 );
