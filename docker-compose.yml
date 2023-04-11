@@ -17,12 +17,12 @@ services:
     ports:
       - '5432:5432'
     restart: always
-    networks:
-      - my-network
     env_file:
       - ./.env
     volumes:
       - postgres_data:/var/lib/postgresql
+    networks:
+      - my-network
   order-service:
     image: quiirex/order-service:v2
     container_name: order-service
