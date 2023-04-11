@@ -14,12 +14,19 @@ import { ReviewRequest__Output } from '../../infrastructure/pb/ReviewRequest';
 import { DeleteReviewResponse } from '../../infrastructure/pb/DeleteReviewResponse';
 import { GetReviewsRequest__Output } from '../../infrastructure/pb/GetReviewsRequest';
 import { Review } from '../../infrastructure/pb/Review';
+import { logger } from '../../infrastructure/server/util/logger';
 
+/*
+  Method to retrieve all reviews from the database
+*/
 export const findAllReviewsHandler = async (
   call: grpc.ServerWritableStream<GetReviewsRequest__Output, Review>,
 ) => {
   try {
     const { page, limit } = call.request;
+    logger.info(
+      `findAllReviewsHandler called with page: ${page}, limit: ${limit}`,
+    );
     const reviews = await findAllReviews({
       page: parseInt(page),
       limit: parseInt(limit),
@@ -42,11 +49,15 @@ export const findAllReviewsHandler = async (
       });
     }
     call.end();
+    logger.info(`findAllReviewsHandler returned ${reviews.length} reviews`);
   } catch (error: any) {
-    console.log(error);
+    logger.error(error);
   }
 };
 
+/*
+  Method to retrieve a single review from the database“
+*/
 export const findReviewHandler = async (
   req: grpc.ServerUnaryCall<ReviewRequest__Output, ReviewResponse>,
   res: grpc.sendUnaryData<ReviewResponse>,
@@ -59,6 +70,7 @@ export const findReviewHandler = async (
         code: grpc.status.NOT_FOUND,
         message: 'No review with that ID exists',
       });
+      logger.info(`findReviewHandler called with id: ${req.request.id}`);
       return;
     }
 
@@ -77,14 +89,21 @@ export const findReviewHandler = async (
         },
       },
     });
+
+    logger.info(`findReviewHandler called with id: ${req.request.id}`);
   } catch (err: any) {
     res({
       code: grpc.status.INTERNAL,
       message: err.message,
     });
+
+    logger.error(err);
   }
 };
 
+/*
+  Method to create a new review in the database
+*/
 export const createReviewHandler = async (
   req: grpc.ServerUnaryCall<CreateReviewRequest__Output, ReviewResponse>,
   res: grpc.sendUnaryData<ReviewResponse>,
@@ -97,6 +116,7 @@ export const createReviewHandler = async (
       book_id: req.request.book_id,
     });
 
+    logger.info(`createReviewHandler created review with ID: ${review.id}`);
     res(null, {
       review: {
         id: review.id,
@@ -119,6 +139,7 @@ export const createReviewHandler = async (
         message: 'Review with that title already exists',
       });
     }
+    logger.error(`createReviewHandler error: ${err.message}`);
     res({
       code: grpc.status.INTERNAL,
       message: err.message,
@@ -126,6 +147,9 @@ export const createReviewHandler = async (
   }
 };
 
+/*
+  Method to update a review in the database
+*/
 export const updateReviewHandler = async (
   req: grpc.ServerUnaryCall<UpdateReviewRequest__Output, ReviewResponse>,
   res: grpc.sendUnaryData<ReviewResponse>,
@@ -138,6 +162,7 @@ export const updateReviewHandler = async (
         code: grpc.status.NOT_FOUND,
         message: 'No review with that ID exists',
       });
+      logger.info(`updateReviewHandler called with id: ${req.request.id}`);
       return;
     }
     const updatedReview = await updateReview(
@@ -166,6 +191,7 @@ export const updateReviewHandler = async (
       },
     });
   } catch (err: any) {
+    logger.error(`updateReviewHandler error: ${err.message}`);
     res({
       code: grpc.status.INTERNAL,
       message: err.message,
@@ -173,6 +199,9 @@ export const updateReviewHandler = async (
   }
 };
 
+/*
+  Method to delete a review from the database
+*/
 export const deleteReviewHandler = async (
   req: grpc.ServerUnaryCall<ReviewRequest__Output, DeleteReviewResponse>,
   res: grpc.sendUnaryData<DeleteReviewResponse>,
@@ -183,11 +212,13 @@ export const deleteReviewHandler = async (
     if (!reviewExists) {
       res({
         code: grpc.status.NOT_FOUND,
-        message: 'No review with that ID exists',
+        message: 'No review exists with that ID',
       });
+      logger.info(
+        `deleteReviewHandler - review not found with ID: ${req.request.id}`,
+      );
       return;
     }
-
     const review = await deleteReview({ id: req.request.id });
 
     if (!review) {
@@ -195,16 +226,25 @@ export const deleteReviewHandler = async (
         code: grpc.status.NOT_FOUND,
         message: 'No review with that ID exists',
       });
+      logger.info(
+        `deleteReviewHandler - review not found with ID: ${req.request.id}`,
+      );
       return;
     }
 
     res(null, {
       success: true,
     });
+    logger.info(
+      `deleteReviewHandler - review deleted with ID: ${req.request.id}`,
+    );
   } catch (err: any) {
     res({
       code: grpc.status.INTERNAL,
       message: err.message,
     });
+    logger.error(
+      `deleteReviewHandler - error deleting review with ID: ${req.request.id}`,
+    );
   }
 };

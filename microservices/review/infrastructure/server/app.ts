@@ -24,7 +24,7 @@ const options: protoLoader.Options = {
 };
 
 const PORT = customConfig.port;
-const PROTO_FILE = '../domain/proto/services.proto';
+const PROTO_FILE = '../../domain/proto/services.proto';
 const packageDef = protoLoader.loadSync(
   path.resolve(__dirname, PROTO_FILE),
   options,
@@ -56,6 +56,8 @@ server.bindAsync(
     }
     server.start();
     connectDB();
-    console.log(`> gRPC server listening on ${port}`);
+    console.log(
+      `> Review service gRPC server listening on 'http://localhost:${port}'`,
+    );
   },
 );
