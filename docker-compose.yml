@@ -18,7 +18,7 @@ services:
       - '5432:5432'
     restart: always
     env_file:
-      - microservices/blog/.env
+      - microservices/review/.env
     volumes:
       - postgres_data:/var/lib/postgresql
     networks:
