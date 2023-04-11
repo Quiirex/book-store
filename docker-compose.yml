@@ -23,6 +23,18 @@ services:
       - postgres_data:/var/lib/postgresql
     networks:
       - my-network
+  review-service:
+    image: quiirex/review-service:v1
+    container_name: review-service
+    ports:
+      - '50051:50051'
+    volumes:
+      - review_data:/app/data
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      - my-network
   order-service:
     image: quiirex/order-service:v2
     container_name: order-service
@@ -61,6 +73,7 @@ volumes:
   order_data:
   catalog_data:
   user_data:
+  review_data:
 
 networks:
   my-network:

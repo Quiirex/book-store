@@ -11,14 +11,17 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 async function connectToDatabase() {
-  try {
-    await prisma.$connect();
-    console.log('> Connected to the database');
-  } catch {
-    console.error('> Failed to connect to the database');
-    process.exit(1);
-  } finally {
-    await prisma.$disconnect();
+  while (true) {
+    try {
+      await prisma.$connect();
+      console.log('> Connected to the database');
+      break;
+    } catch {
+      console.error(
+        '> Failed to connect to the database. Retrying in 5 seconds...',
+      );
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
   }
 }
 
