@@ -9,7 +9,7 @@
     "db:migrate": "npx prisma migrate dev --name post-entity --create-only --schema ./prisma/schema.prisma",
     "db:generate": " npx prisma generate --schema ./prisma/schema.prisma",
     "db:push": "npx prisma db push --schema ./prisma/schema.prisma",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc"
   },
   "keywords": [
@@ -22,7 +22,11 @@
   "author": "Luka Mlinarič",
   "license": "ISC",
   "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "@types/jest": "^29.5.0",
+    "jest": "^29.5.0",
     "prisma": "^4.12.0",
+    "ts-jest": "^29.1.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.4"
   },
