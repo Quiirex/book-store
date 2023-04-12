@@ -17,6 +17,10 @@ jobs:
       with:
         java-version: 17
         distribution: 'adopt'
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '19.x'
     - name: Install User service dependencies
       run: |
         cd microservices/user
@@ -41,3 +45,11 @@ jobs:
       run: |
         cd microservices/order
         ./gradlew test
+    - name: Install Review service dependencies
+      run: |
+        cd microservices/review
+        npm install
+    - name: Run Review service unit tests
+      run: |
+        cd microservices/review
+        npm run test
