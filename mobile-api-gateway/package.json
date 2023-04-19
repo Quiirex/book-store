@@ -1,6 +1,6 @@
 {
   "name": "mobile-api-gateway",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "build": "npx ts-node build.ts",
     "lint": "npx eslint --ext .ts src/",
