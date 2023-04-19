@@ -1,91 +1,48 @@
-/**
- * Setup express server.
- */
-
-import cookieParser from 'cookie-parser';
+import http from 'http';
+import express, { Express } from 'express';
 import morgan from 'morgan';
-import path from 'path';
-import helmet from 'helmet';
-import express, { Request, Response, NextFunction } from 'express';
-import logger from 'jet-logger';
+import routes from './routes/router';
 
-import 'express-async-errors';
+const router: Express = express();
 
-import BaseRouter from '@src/routes/api';
-import Paths from '@src/routes/constants/Paths';
+/** Logging */
+router.use(morgan('dev'));
+/** Parse the request */
+router.use(express.urlencoded({ extended: false }));
+/** Takes care of JSON data */
+router.use(express.json());
 
-import EnvVars from '@src/constants/EnvVars';
-import HttpStatusCodes from '@src/constants/HttpStatusCodes';
-
-import { NodeEnvs } from '@src/constants/misc';
-import { RouteError } from '@src/other/classes';
-
-
-// **** Variables **** //
-
-const app = express();
-
-
-// **** Setup **** //
-
-// Basic middleware
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(cookieParser(EnvVars.CookieProps.Secret));
-
-// Show routes called in console during development
-if (EnvVars.NodeEnv === NodeEnvs.Dev) {
-  app.use(morgan('dev'));
-}
-
-// Security
-if (EnvVars.NodeEnv === NodeEnvs.Production) {
-  app.use(helmet());
-}
-
-// Add APIs, must be after middleware
-app.use(Paths.Base, BaseRouter);
-
-// Add error handler
-app.use((
-  err: Error,
-  _: Request,
-  res: Response,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  next: NextFunction,
-) => {
-  if (EnvVars.NodeEnv !== NodeEnvs.Test) {
-    logger.err(err, true);
+/** RULES OF OUR API */
+router.use((req, res, next) => {
+  // set the CORS policy
+  res.header('Access-Control-Allow-Origin', '*');
+  // set the CORS headers
+  res.header(
+    'Access-Control-Allow-Headers',
+    'origin, X-Requested-With,Content-Type,Accept, Authorization',
+  );
+  // set the CORS method headers
+  if (req.method === 'OPTIONS') {
+    res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST');
+    return res.status(200).json({});
   }
-  let status = HttpStatusCodes.BAD_REQUEST;
-  if (err instanceof RouteError) {
-    status = err.status;
-  }
-  return res.status(status).json({ error: err.message });
+  next();
 });
 
+/** Routes */
+router.use('/', routes);
 
-// ** Front-End Content ** //
-
-// Set views directory (html)
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
-
-// Set static directory (js and css).
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
-
-// Nav to users pg by default
-app.get('/', (_: Request, res: Response) => {
-  return res.redirect('/users');
+/** Error handling */
+router.use((req, res, next) => {
+  const error = new Error('not found');
+  return res.status(404).json({
+    message: error.message,
+  });
 });
 
-// Redirect to login if not logged in.
-app.get('/users', (_: Request, res: Response) => {
-  return res.sendFile('users.html', { root: viewsDir });
-});
-
-
-// **** Export default **** //
-
-export default app;
+/** Server */
+const httpServer = http.createServer(router);
+const PORT: any = process.env.PORT ?? 3000;
+httpServer.listen(PORT, () =>
+  console.log(`WEB API Gateway running on port ${PORT}`),
+);
