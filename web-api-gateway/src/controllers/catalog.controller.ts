@@ -8,7 +8,7 @@ import { Review } from '../models/Review';
 const host = 'localhost';
 const port = 7000;
 
-const getBooks = async (req: Request, res: Response, next: NextFunction) => {
+const getBooks = async (_req: Request, res: Response) => {
   try {
     const result: AxiosResponse = await axios.get(
       `http://${host}:${port}/api/book`,
@@ -21,7 +21,7 @@ const getBooks = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getBook = async (req: Request, res: Response, next: NextFunction) => {
+const getBook = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
     const result: AxiosResponse = await axios.get(
@@ -29,44 +29,33 @@ const getBook = async (req: Request, res: Response, next: NextFunction) => {
     );
 
     const book: Book = result.data;
-    let review: Review;
+    let reviews: Review[] = [];
     let bookWithReview: BookWithReviews;
 
-    grpcClient.getReview(
-      { id: '1e288217-354a-457a-891e-b0dfd23067e8' },
-      (err, response) => {
-        if (err) {
-          console.error(err);
-          return res
-            .status(500)
-            .json({ message: 'Error while getting review' });
-        }
-        if (!response) {
-          return res.status(404).json({ message: 'Review not found' });
-        }
-        review = {
-          id: response.review?.id,
-          title: response.review?.title,
-          content: response.review?.content,
-          author_id: response.review?.author_id,
-          book_id: response.review?.book_id,
-          posted_at: response.review?.posted_at?.seconds?.toString(),
-          updated_at: response.review?.updated_at?.seconds?.toString(),
-        };
-        bookWithReview = {
-          ...book,
-          review,
-        };
-        return res.status(200).json({ bookWithReview });
-      },
-    );
+    const stream = grpcClient.getReviewsByBookId({
+      book_id: book.id,
+    });
+    stream.on('data', (data: Review) => {
+      reviews.push(data);
+    });
+
+    stream.on('end', () => {
+      bookWithReview = { ...book, reviews };
+      return res.status(200).json({ book: bookWithReview });
+    });
+
+    stream.on('error', (err) => {
+      res.status(500).json({
+        message: 'Internal server error',
+      });
+    });
   } catch (error) {
     console.error(error);
     return res.status(503).json({ message: 'External API not available' });
   }
 };
 
-const createBook = async (req: Request, res: Response, next: NextFunction) => {
+const createBook = async (req: Request, res: Response) => {
   try {
     const {
       title,
@@ -105,7 +94,7 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const updateBook = async (req: Request, res: Response, next: NextFunction) => {
+const updateBook = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
     const {
@@ -145,7 +134,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const deleteBook = async (req: Request, res: Response, next: NextFunction) => {
+const deleteBook = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
     const response: AxiosResponse = await axios.delete(
