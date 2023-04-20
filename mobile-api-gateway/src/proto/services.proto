@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+service ReviewService {
+  rpc CreateReview(CreateReviewRequest) returns (ReviewResponse) {}
+  rpc GetReview(ReviewRequest) returns (ReviewResponse) {}
+  rpc GetReviews(GetReviewsRequest) returns (stream Review) {}
+  rpc GetReviewsByBookId(GetReviewsByBookIdRequest) returns (stream Review) {}
+  rpc GetReviewsByAuthorId(GetReviewsByAuthorIdRequest) returns (stream Review) {}
+  rpc UpdateReview(UpdateReviewRequest) returns (ReviewResponse) {}
+  rpc DeleteReview(ReviewRequest) returns (DeleteReviewResponse) {}
+}
+
+message GetReviewsRequest {
+  int64 page = 1;
+  int64 limit = 2;
+}
+
+message GetReviewsByBookIdRequest {
+  string book_id = 1;
+  int64 page = 2;
+  int64 limit = 3;
+}
+
+message GetReviewsByAuthorIdRequest {
+  string author_id = 1;
+  int64 page = 2;
+  int64 limit = 3;
+}
+
+message UpdateReviewRequest {
+  string id = 1;
+  optional string title = 2;
+  optional string content = 3;
+  optional string author_id = 4;
+  optional string book_id = 5;
+}
+
+message CreateReviewRequest {
+  string title = 1;
+  string content = 2;
+  string author_id = 3;
+  string book_id = 4;
+}
+
+message Review {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  string author_id = 4;
+  string book_id = 5;
+  google.protobuf.Timestamp posted_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message ReviewResponse { Review review = 1; }
+
+message ReviewRequest { string id = 1; }
+
+message DeleteReviewResponse { bool success = 1; }
