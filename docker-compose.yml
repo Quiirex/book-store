@@ -24,7 +24,7 @@ services:
     networks:
       - my-network
   review-service:
-    image: quiirex/review-service:v1
+    image: quiirex/review-service:v2
     container_name: review-service
     ports:
       - '50051:50051'
