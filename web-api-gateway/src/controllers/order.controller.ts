@@ -64,7 +64,6 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
-// update order
 const updateOrder = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
@@ -99,7 +98,6 @@ const updateOrder = async (req: Request, res: Response) => {
   }
 };
 
-// delete an order
 const deleteOrder = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
