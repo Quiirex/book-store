@@ -1,7 +1,7 @@
 import express from 'express';
-import catalog_controller from '../controllers/catalog-controller';
-import user_controller from '../controllers/user-controller';
-// import order-controller from '../controllers/order-controller';
+import catalog_controller from '../controllers/catalog.controller';
+import user_controller from '../controllers/user.controller';
+import order_controller from '../controllers/order.controller';
 const router = express.Router();
 
 // catalog routes
@@ -19,11 +19,11 @@ router.delete('/user/:id', user_controller.deleteUser);
 router.post('/user/login', user_controller.loginUser);
 router.post('/user', user_controller.registerUser);
 
-// // order routes
-// router.get('/orders', controller.getOrders);
-// router.get('/orders/:id', controller.getOrder);
-// router.put('/orders/:id', controller.updateOrder);
-// router.delete('/orders/:id', controller.deleteOrder);
-// router.post('/orders', controller.addOrder);
+// order routes
+router.get('/order', order_controller.getOrders);
+router.get('/order/:id', order_controller.getOrder);
+router.put('/order/:id', order_controller.updateOrder);
+router.delete('/order/:id', order_controller.deleteOrder);
+router.post('/order', order_controller.createOrder);
 
 export = router;

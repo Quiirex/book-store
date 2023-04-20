@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import axios, { AxiosResponse } from 'axios';
+import { grpcClient } from '../proto/client/client';
 
 interface Book {
   id: string;
@@ -26,7 +27,8 @@ const getBooks = async (req: Request, res: Response, next: NextFunction) => {
     const books: Book[] = result.data;
     return res.status(200).json({ books });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(503).json({ message: 'External API not available' });
   }
 };
 
@@ -36,10 +38,12 @@ const getBook = async (req: Request, res: Response, next: NextFunction) => {
     const result: AxiosResponse = await axios.get(
       `http://${host}:${port}/api/book/${id}`,
     );
+    // const review = grpcClient.getReview({ id });
     const book: Book = result.data;
     return res.status(200).json({ book });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(503).json({ message: 'External API not available' });
   }
 };
 
@@ -77,7 +81,8 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
     );
     return res.status(200).json({ message: response.data });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(503).json({ message: 'External API not available' });
   }
 };
 
@@ -116,7 +121,8 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
     );
     return res.status(200).json({ message: response.data });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(503).json({ message: 'External API not available' });
   }
 };
 
@@ -128,7 +134,8 @@ const deleteBook = async (req: Request, res: Response, next: NextFunction) => {
     );
     return res.status(200).json({ message: response.data });
   } catch (error) {
-    next(error);
+    console.error(error);
+    return res.status(503).json({ message: 'External API not available' });
   }
 };
 
