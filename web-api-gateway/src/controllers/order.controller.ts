@@ -1,15 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import axios, { AxiosResponse } from 'axios';
 import { Order } from '../models/Order';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-const host = 'localhost';
-const port = 8000;
+dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-const getOrders = async (req: Request, res: Response, next: NextFunction) => {
+const URL = process.env.ORDER_SERVICE;
+
+const getOrders = async (_req: Request, res: Response) => {
   try {
-    const result: AxiosResponse = await axios.get(
-      `http://${host}:${port}/api/order`,
-    );
+    const result: AxiosResponse = await axios.get(`${URL}/api/order`);
     const orders: Order[] = result.data;
     return res.status(200).json({ orders });
   } catch (error) {
@@ -18,12 +19,10 @@ const getOrders = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getOrder = async (req: Request, res: Response, next: NextFunction) => {
+const getOrder = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    const result: AxiosResponse = await axios.get(
-      `http://${host}:${port}/api/order/${id}`,
-    );
+    const result: AxiosResponse = await axios.get(`${URL}/api/order/${id}`);
     const order: Order = result.data;
     return res.status(200).json({ order });
   } catch (error) {
@@ -32,7 +31,7 @@ const getOrder = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const createOrder = async (req: Request, res: Response, next: NextFunction) => {
+const createOrder = async (req: Request, res: Response) => {
   try {
     const {
       orderDate,
@@ -55,7 +54,7 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     };
 
     const response: AxiosResponse = await axios.post(
-      `http://${host}:${port}/api/order`,
+      `${URL}/api/order`,
       newOrder,
     );
     return res.status(200).json({ message: response.data });
@@ -66,7 +65,7 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 // update order
-const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
+const updateOrder = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
     const {
@@ -90,7 +89,7 @@ const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
     };
 
     const response: AxiosResponse = await axios.put(
-      `http://${host}:${port}/api/order/${id}`,
+      `${URL}/api/order/${id}`,
       updatedFields,
     );
     return res.status(200).json({ message: response.data });
@@ -101,11 +100,11 @@ const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 // delete an order
-const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
+const deleteOrder = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
     const response: AxiosResponse = await axios.delete(
-      `http://${host}:${port}/api/order/${id}`,
+      `${URL}/api/order/${id}`,
     );
     return res.status(200).json({ message: response.data });
   } catch (error) {

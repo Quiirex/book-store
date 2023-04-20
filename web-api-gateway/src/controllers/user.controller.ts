@@ -3,11 +3,14 @@ import axios, { AxiosResponse } from 'axios';
 import { LoginUser } from '../models/LoginUser';
 import { RegisterUser } from '../models/RegisterUser';
 import { User } from '../models/User';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-const host = 'localhost';
-const port = 5000;
+dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+const URL = process.env.USER_SERVICE;
+
+const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const loginUser: LoginUser = {
@@ -15,7 +18,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
       password,
     };
     const response: AxiosResponse = await axios.post(
-      `http://${host}:${port}/api/user/login`,
+      `${URL}/api/user/login`,
       loginUser,
     );
     return res.status(200).json({ message: response.data });
@@ -25,11 +28,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const registerUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+const registerUser = async (req: Request, res: Response) => {
   try {
     const { first_name, last_name, email, password, address } = req.body;
 
@@ -42,7 +41,7 @@ const registerUser = async (
     };
 
     const response: AxiosResponse = await axios.post(
-      `http://${host}:${port}/api/user`,
+      `${URL}/api/user`,
       newUser,
     );
     return res.status(201).json({ message: response.data });
@@ -52,17 +51,14 @@ const registerUser = async (
   }
 };
 
-const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+const getUsers = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
     const config = { headers: { Authorization: `Bearer ${token}` } };
-    const result: AxiosResponse = await axios.get(
-      `http://${host}:${port}/api/user`,
-      config,
-    );
+    const result: AxiosResponse = await axios.get(`${URL}/api/user`, config);
     const users: User[] = result.data;
     return res.status(200).json({ users });
   } catch (error) {
@@ -71,7 +67,7 @@ const getUsers = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getUser = async (req: Request, res: Response, next: NextFunction) => {
+const getUser = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
@@ -80,7 +76,7 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const id: string = req.params.id;
     const result: AxiosResponse = await axios.get(
-      `http://${host}:${port}/api/user/${id}`,
+      `${URL}/api/user/${id}`,
       config,
     );
     const user: User = result.data;
@@ -91,7 +87,7 @@ const getUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+const updateUser = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
@@ -110,7 +106,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
     };
 
     const response: AxiosResponse = await axios.put(
-      `http://${host}:${port}/api/user/${id}`,
+      `${URL}/api/user/${id}`,
       updatedFields,
       config,
     );
@@ -121,7 +117,7 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+const deleteUser = async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
@@ -130,7 +126,7 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const id: string = req.params.id;
     const response: AxiosResponse = await axios.delete(
-      `http://${host}:${port}/api/user/${id}`,
+      `${URL}/api/user/${id}`,
       config,
     );
     return res.status(204).json({ message: response.data });

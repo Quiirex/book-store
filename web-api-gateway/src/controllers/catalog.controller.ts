@@ -1,18 +1,19 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import axios, { AxiosResponse } from 'axios';
 import { grpcClient } from '../proto/client/client';
 import { Book } from '../models/Book';
 import { BookWithReviews } from '../models/joint/BookWithReview';
 import { Review } from '../models/Review';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-const host = 'localhost';
-const port = 7000;
+dotenv.config({ path: path.join(__dirname, '../../.env') });
+
+const URL = process.env.CATALOG_SERVICE;
 
 const getBooks = async (_req: Request, res: Response) => {
   try {
-    const result: AxiosResponse = await axios.get(
-      `http://${host}:${port}/api/book`,
-    );
+    const result: AxiosResponse = await axios.get(`${URL}/api/book`);
     const books: Book[] = result.data;
     return res.status(200).json({ books });
   } catch (error) {
@@ -26,7 +27,7 @@ const getBook = async (req: Request, res: Response) => {
     const id: string = req.params.id;
     let reviews: Review[] = [];
     const [bookResponse] = await Promise.all([
-      axios.get(`http://${host}:${port}/api/book/${id}`),
+      axios.get(`${URL}/api/book/${id}`),
 
       new Promise((resolve, reject) => {
         const stream = grpcClient.getReviewsByBookId({ book_id: id });
@@ -86,7 +87,7 @@ const createBook = async (req: Request, res: Response) => {
     };
 
     const response: AxiosResponse = await axios.post(
-      `http://${host}:${port}/api/book`,
+      `${URL}/api/book`,
       newBook,
     );
     return res.status(200).json({ message: response.data });
@@ -126,7 +127,7 @@ const updateBook = async (req: Request, res: Response) => {
     };
 
     const response: AxiosResponse = await axios.put(
-      `http://${host}:${port}/api/book/${id}`,
+      `${URL}/api/book/${id}`,
       updatedFields,
     );
     return res.status(200).json({ message: response.data });
@@ -139,9 +140,7 @@ const updateBook = async (req: Request, res: Response) => {
 const deleteBook = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    const response: AxiosResponse = await axios.delete(
-      `http://${host}:${port}/api/book/${id}`,
-    );
+    const response: AxiosResponse = await axios.delete(`${URL}/api/book/${id}`);
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);

@@ -2,6 +2,7 @@ import express from 'express';
 import catalog_controller from '../controllers/catalog.controller';
 import user_controller from '../controllers/user.controller';
 import order_controller from '../controllers/order.controller';
+import review_controller from '../controllers/review.controller';
 const router = express.Router();
 
 // catalog routes
@@ -25,5 +26,9 @@ router.get('/order/:id', order_controller.getOrder);
 router.put('/order/:id', order_controller.updateOrder);
 router.delete('/order/:id', order_controller.deleteOrder);
 router.post('/order', order_controller.createOrder);
+
+// review routes
+router.get('/review/:id', review_controller.getReviewsByAuthorId);
+router.delete('/review/:id', review_controller.deleteReview);
 
 export = router;
