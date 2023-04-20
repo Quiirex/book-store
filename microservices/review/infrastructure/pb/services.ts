@@ -10,6 +10,8 @@ type SubtypeConstructor<Constructor extends new (...args: any) => any, Subtype> 
 export interface ProtoGrpcType {
   CreateReviewRequest: MessageTypeDefinition
   DeleteReviewResponse: MessageTypeDefinition
+  GetReviewsByAuthorIdRequest: MessageTypeDefinition
+  GetReviewsByBookIdRequest: MessageTypeDefinition
   GetReviewsRequest: MessageTypeDefinition
   Review: MessageTypeDefinition
   ReviewRequest: MessageTypeDefinition

@@ -3,6 +3,8 @@ import {
   createReview,
   deleteReview,
   findAllReviews,
+  findAllReviewsByBookId,
+  findAllReviewsByAuthorId,
   findReview,
   findUniqueReview,
   updateReview,
@@ -15,6 +17,8 @@ import { DeleteReviewResponse } from '../../infrastructure/pb/DeleteReviewRespon
 import { GetReviewsRequest__Output } from '../../infrastructure/pb/GetReviewsRequest';
 import { Review } from '../../infrastructure/pb/Review';
 import { logger } from '../../infrastructure/server/util/logger';
+import { GetReviewsByBookIdRequest__Output } from '../../infrastructure/pb/GetReviewsByBookIdRequest';
+import { GetReviewsByAuthorIdRequest__Output } from '../../infrastructure/pb/GetReviewsByAuthorIdRequest';
 
 /*
   Method to retrieve all reviews from the database
@@ -50,6 +54,90 @@ export const findAllReviewsHandler = async (
     }
     call.end();
     logger.info(`findAllReviewsHandler returned ${reviews.length} reviews`);
+  } catch (error: any) {
+    logger.error(error);
+  }
+};
+
+/*
+  Method to retrieve all reviews by book id from the database
+*/
+export const findAllReviewsByBookIdHandler = async (
+  call: grpc.ServerWritableStream<GetReviewsByBookIdRequest__Output, Review>,
+) => {
+  try {
+    const { book_id, page, limit } = call.request;
+    logger.info(
+      `findReviewsByBookIdHandler called with book_id: ${book_id}, page: ${page}, limit: ${limit}`,
+    );
+    const reviews = await findAllReviewsByBookId({
+      book_id: book_id,
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
+
+    for (let i = 0; i < reviews.length; i++) {
+      const review = reviews[i];
+      call.write({
+        id: review.id,
+        title: review.title,
+        content: review.content,
+        author_id: review.author_id,
+        book_id: review.book_id,
+        posted_at: {
+          seconds: review.created_at.getTime() / 1000,
+        },
+        updated_at: {
+          seconds: review.updated_at.getTime() / 1000,
+        },
+      });
+    }
+    call.end();
+    logger.info(
+      `findReviewsByBookIdHandler returned ${reviews.length} reviews for book_id: ${book_id}`,
+    );
+  } catch (error: any) {
+    logger.error(error);
+  }
+};
+
+/*
+  Method to retrieve all reviews by author id from the database
+*/
+export const findAllReviewsByAuthorIdHandler = async (
+  call: grpc.ServerWritableStream<GetReviewsByAuthorIdRequest__Output, Review>,
+) => {
+  try {
+    const { author_id, page, limit } = call.request;
+    logger.info(
+      `findReviewsByAuthorIdHandler called with author_id: ${author_id}, page: ${page}, limit: ${limit}`,
+    );
+    const reviews = await findAllReviewsByAuthorId({
+      author_id: author_id,
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
+
+    for (let i = 0; i < reviews.length; i++) {
+      const review = reviews[i];
+      call.write({
+        id: review.id,
+        title: review.title,
+        content: review.content,
+        author_id: review.author_id,
+        book_id: review.book_id,
+        posted_at: {
+          seconds: review.created_at.getTime() / 1000,
+        },
+        updated_at: {
+          seconds: review.updated_at.getTime() / 1000,
+        },
+      });
+    }
+    call.end();
+    logger.info(
+      `findReviewsByAuthorIdHandler returned ${reviews.length} reviews for author_id: ${author_id}`,
+    );
   } catch (error: any) {
     logger.error(error);
   }

@@ -42,7 +42,8 @@ router.use((req, res, next) => {
 
 /** Server */
 const httpServer = http.createServer(router);
+const host = process.env.HOST ?? 'localhost';
 const PORT: any = process.env.PORT ?? 3000;
 httpServer.listen(PORT, () =>
-  console.log(`WEB API Gateway running on port ${PORT}`),
+  console.log(`> Web API Gateway listening on http://${host}:${PORT}`),
 );

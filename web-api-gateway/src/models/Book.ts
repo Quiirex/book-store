@@ -1,6 +1,4 @@
-import { Review } from '../Review';
-
-export interface BookWithReviews {
+export interface Book {
   id: string;
   title: string;
   author: string;
@@ -12,5 +10,4 @@ export interface BookWithReviews {
   rating: number;
   format: string;
   price: number;
-  reviews: Review[];
 }

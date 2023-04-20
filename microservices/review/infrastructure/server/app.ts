@@ -6,6 +6,8 @@ import customConfig from './config/default';
 import {
   createReviewHandler,
   deleteReviewHandler,
+  findAllReviewsByAuthorIdHandler,
+  findAllReviewsByBookIdHandler,
   findAllReviewsHandler,
   findReviewHandler,
   updateReviewHandler,
@@ -40,6 +42,8 @@ server.addService(proto.ReviewService.service, {
   DeleteReview: (req, res) => deleteReviewHandler(req, res),
   GetReview: (req, res) => findReviewHandler(req, res),
   GetReviews: (call) => findAllReviewsHandler(call),
+  GetReviewsByBookId: (call) => findAllReviewsByBookIdHandler(call),
+  GetReviewsByAuthorId: (call) => findAllReviewsByAuthorIdHandler(call),
 } as ReviewServiceHandlers);
 
 server.bindAsync(

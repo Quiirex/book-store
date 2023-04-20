@@ -45,6 +45,52 @@ export const findAllReviews = async ({
   })) as Review[];
 };
 
+export const findAllReviewsByBookId = async ({
+  book_id,
+  page,
+  limit,
+  select,
+}: {
+  book_id: string;
+  page: number;
+  limit: number;
+  select?: Prisma.ReviewSelect;
+}) => {
+  const take = limit || 10;
+  const skip = (page - 1) * limit;
+  return (await prisma.review.findMany({
+    where: {
+      book_id,
+    },
+    select,
+    skip,
+    take,
+  })) as Review[];
+};
+
+export const findAllReviewsByAuthorId = async ({
+  author_id,
+  page,
+  limit,
+  select,
+}: {
+  author_id: string;
+  page: number;
+  limit: number;
+  select?: Prisma.ReviewSelect;
+}) => {
+  const take = limit || 10;
+  const skip = (page - 1) * limit;
+  return (await prisma.review.findMany({
+    where: {
+      author_id,
+    },
+    select,
+    skip,
+    take,
+  })) as Review[];
+};
+
 export const updateReview = async (
   where: Partial<Prisma.ReviewWhereUniqueInput>,
   data: Prisma.ReviewUpdateInput,

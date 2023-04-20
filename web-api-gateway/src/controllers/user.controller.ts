@@ -1,26 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import axios, { AxiosResponse } from 'axios';
-
-interface User {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  address: string;
-}
-
-interface RegisterUser {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-  address: string;
-}
-
-interface LoginUser {
-  email: string;
-  password: string;
-}
+import { LoginUser } from '../models/LoginUser';
+import { RegisterUser } from '../models/RegisterUser';
+import { User } from '../models/User';
 
 const host = 'localhost';
 const port = 5000;

@@ -1,30 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import axios, { AxiosResponse } from 'axios';
-
-interface Book {
-  id: string;
-  title: string;
-  author: string;
-  yearOfPublication: number;
-  isbn: string;
-  description: string;
-  genre: string;
-  language: string;
-  rating: number;
-  format: string;
-  price: number;
-}
-
-interface Order {
-  id: string;
-  orderDate: string;
-  orderNumber: string;
-  orderStatus: string;
-  orderTotal: number;
-  orderList: Book[];
-  shippingAddress: string;
-  customerId: string;
-}
+import { Order } from '../models/Order';
 
 const host = 'localhost';
 const port = 8000;
