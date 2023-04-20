@@ -24,31 +24,33 @@ const getBooks = async (_req: Request, res: Response) => {
 const getBook = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    const result: AxiosResponse = await axios.get(
-      `http://${host}:${port}/api/book/${id}`,
-    );
-
-    const book: Book = result.data;
     let reviews: Review[] = [];
-    let bookWithReview: BookWithReviews;
+    const [bookResponse] = await Promise.all([
+      axios.get(`http://${host}:${port}/api/book/${id}`),
 
-    const stream = grpcClient.getReviewsByBookId({
-      book_id: book.id,
-    });
-    stream.on('data', (data: Review) => {
-      reviews.push(data);
-    });
+      new Promise((resolve, reject) => {
+        const stream = grpcClient.getReviewsByBookId({ book_id: id });
 
-    stream.on('end', () => {
-      bookWithReview = { ...book, reviews };
-      return res.status(200).json({ book: bookWithReview });
-    });
+        stream.on('data', (data: Review) => {
+          reviews.push(data);
+        });
 
-    stream.on('error', (err) => {
-      res.status(500).json({
-        message: 'Internal server error',
-      });
-    });
+        stream.on('end', () => {
+          resolve(reviews);
+        });
+
+        stream.on('error', (err) => {
+          reject(err);
+        });
+      }),
+    ]);
+
+    const book: Book = bookResponse.data;
+    const bookWithReviews: BookWithReviews = {
+      ...book,
+      reviews,
+    };
+    return res.status(200).json({ book: bookWithReviews });
   } catch (error) {
     console.error(error);
     return res.status(503).json({ message: 'External API not available' });
