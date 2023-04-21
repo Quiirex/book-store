@@ -1,16 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import axios, { AxiosResponse } from 'axios';
 import { Order } from '../models/Order';
-import * as dotenv from 'dotenv';
-import * as path from 'path';
 
-dotenv.config({ path: path.join(__dirname, '../../.env') });
-
-const URL = process.env.ORDER_SERVICE;
+const host = 'order-service';
+const PORT = 8000;
 
 const getOrders = async (_req: Request, res: Response) => {
   try {
-    const result: AxiosResponse = await axios.get(`${URL}/api/order`);
+    const result: AxiosResponse = await axios.get(
+      `http://${host}:${PORT}/api/order`,
+    );
     const orders: Order[] = result.data;
     return res.status(200).json({ orders });
   } catch (error) {
@@ -24,7 +23,9 @@ const getOrders = async (_req: Request, res: Response) => {
 const getOrder = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    const result: AxiosResponse = await axios.get(`${URL}/api/order/${id}`);
+    const result: AxiosResponse = await axios.get(
+      `http://${host}:${PORT}/api/order/${id}`,
+    );
     const order: Order = result.data;
     return res.status(200).json({ order });
   } catch (error) {
@@ -58,7 +59,7 @@ const createOrder = async (req: Request, res: Response) => {
     };
 
     const response: AxiosResponse = await axios.post(
-      `${URL}/api/order`,
+      `http://${host}:${PORT}/api/order`,
       newOrder,
     );
     return res.status(200).json({ message: response.data });
@@ -94,7 +95,7 @@ const updateOrder = async (req: Request, res: Response) => {
     };
 
     const response: AxiosResponse = await axios.put(
-      `${URL}/api/order/${id}`,
+      `http://${host}:${PORT}/api/order/${id}`,
       updatedFields,
     );
     return res.status(200).json({ message: response.data });
@@ -110,7 +111,7 @@ const deleteOrder = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
     const response: AxiosResponse = await axios.delete(
-      `${URL}/api/order/${id}`,
+      `http://${host}:${PORT}/api/order/${id}`,
     );
     return res.status(200).json({ message: response.data });
   } catch (error) {

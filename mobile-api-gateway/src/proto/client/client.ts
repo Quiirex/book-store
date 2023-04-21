@@ -31,7 +31,7 @@ const grpcClient: ReviewServiceClient = new proto.ReviewService(
 async function waitForClientReady(): Promise<void> {
   return new Promise((resolve, reject) => {
     const deadline = new Date();
-    deadline.setSeconds(deadline.getSeconds() + 1);
+    deadline.setSeconds(deadline.getSeconds() + 30);
     grpcClient.waitForReady(deadline, (err) => {
       if (err) {
         console.error(err);
