@@ -5,7 +5,8 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "nodemon",
-    "build": "rm -rf build/ && prettier --write src/ && tsc"
+    "start": "node build/server.js",
+    "build": "tsc"
   },
   "keywords": [
     "typescript",

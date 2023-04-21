@@ -24,7 +24,7 @@ const proto: ProtoGrpcType = grpc.loadPackageDefinition(
 ) as unknown as ProtoGrpcType;
 
 const grpcClient: ReviewServiceClient = new proto.ReviewService(
-  `0.0.0.0:50051`,
+  `review-service:50051`,
   grpc.credentials.createInsecure(),
 );
 

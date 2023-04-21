@@ -23,6 +23,32 @@ services:
       - postgres_data:/var/lib/postgresql
     networks:
       - my-network
+  web-api-gateway:
+    image: quiirex/web-api-gateway:v1
+    container_name: web-api-gateway
+    ports:
+      - '3000:3000'
+    restart: always
+    depends_on:
+      - catalog-service
+      - order-service
+      - user-service
+      - review-service
+    networks:
+      - my-network
+  # mobile-api-gateway:
+  #   image: quiirex/mobile-api-gateway:v1
+  #   container_name: mobile-api-gateway
+  #   ports:
+  #     - '4000:4000'
+  #   restart: always
+  #   depends_on:
+  #     - catalog-service
+  #     - order-service
+  #     - user-service
+  #     - review-service
+  #   networks:
+  #     - my-network
   review-service:
     image: quiirex/review-service:v2
     container_name: review-service

@@ -39,7 +39,7 @@ router.use((error: Error, req: Request, res: Response, next: NextFunction) => {
 
 const httpServer = createServer(router);
 const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 
 async function startServer() {
   await new Promise<void>((resolve, reject) => {

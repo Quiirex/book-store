@@ -24,14 +24,14 @@ const proto: ProtoGrpcType = grpc.loadPackageDefinition(
 ) as unknown as ProtoGrpcType;
 
 const grpcClient: ReviewServiceClient = new proto.ReviewService(
-  `0.0.0.0:50051`,
+  `review-service:50051`,
   grpc.credentials.createInsecure(),
 );
 
 async function waitForClientReady(): Promise<void> {
   return new Promise((resolve, reject) => {
     const deadline = new Date();
-    deadline.setSeconds(deadline.getSeconds() + 1);
+    deadline.setSeconds(deadline.getSeconds() + 30);
     grpcClient.waitForReady(deadline, (err) => {
       if (err) {
         console.error(err);
