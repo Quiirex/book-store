@@ -30,5 +30,7 @@ router.post('/order', order_controller.createOrder);
 // review routes
 router.get('/review/:id', review_controller.getReviewsByAuthorId);
 router.delete('/review/:id', review_controller.deleteReview);
+router.post('/review', review_controller.createReview);
+router.put('/review/:id', review_controller.updateReview);
 
 export = router;

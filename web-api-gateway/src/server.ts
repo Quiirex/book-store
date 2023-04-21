@@ -1,49 +1,55 @@
-import http from 'http';
-import express, { Express } from 'express';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
+import { createServer } from 'http';
+import { AddressInfo } from 'net';
 import routes from './routes/router';
 
 const router: Express = express();
 
-/** Logging */
 router.use(morgan('dev'));
-/** Parse the request */
 router.use(express.urlencoded({ extended: false }));
-/** Takes care of JSON data */
 router.use(express.json());
 
-/** RULES OF OUR API */
-router.use((req, res, next) => {
-  // set the CORS policy
-  res.header('Access-Control-Allow-Origin', '*');
-  // set the CORS headers
-  res.header(
+router.use((req: Request, res: Response, next: NextFunction) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
     'Access-Control-Allow-Headers',
-    'origin, X-Requested-With,Content-Type,Accept, Authorization',
+    'origin, X-Requested-With, Content-Type, Accept, Authorization',
   );
-  // set the CORS method headers
   if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, PATCH, DELETE, POST');
     return res.status(200).json({});
   }
   next();
 });
 
-/** Routes */
 router.use('/', routes);
 
-/** Error handling */
-router.use((req, res, next) => {
-  const error = new Error('not found');
-  return res.status(404).json({
+router.use((req: Request, res: Response, next: NextFunction) => {
+  const error = new Error('Not found');
+  next(error);
+});
+
+router.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(error.stack);
+  res.status(500).json({
     message: error.message,
   });
 });
 
-/** Server */
-const httpServer = http.createServer(router);
+const httpServer = createServer(router);
 const host = process.env.HOST ?? 'localhost';
-const PORT: any = process.env.PORT ?? 3000;
-httpServer.listen(PORT, () =>
-  console.log(`> Web API Gateway listening on http://${host}:${PORT}`),
-);
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+
+async function startServer() {
+  await new Promise<void>((resolve, reject) => {
+    httpServer.listen(port, host, () => {
+      const { address, port } = httpServer.address() as AddressInfo;
+      console.log(`Web API Gateway listening on http://${address}:${port}`);
+      resolve();
+    });
+    httpServer.on('error', reject);
+  });
+}
+
+startServer();

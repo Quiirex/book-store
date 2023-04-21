@@ -89,4 +89,9 @@ const deleteReview = async (req: Request, res: Response) => {
   }
 };
 
-export default { getReviewsByAuthorId, deleteReview };
+export default {
+  getReviewsByAuthorId,
+  createReview,
+  updateReview,
+  deleteReview,
+};
