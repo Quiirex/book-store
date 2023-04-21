@@ -3,12 +3,9 @@ import axios, { AxiosResponse } from 'axios';
 import { LoginUser } from '../models/LoginUser';
 import { RegisterUser } from '../models/RegisterUser';
 import { User } from '../models/User';
-import * as dotenv from 'dotenv';
-import * as path from 'path';
 
-dotenv.config({ path: path.join(__dirname, '../../.env') });
-
-const URL = process.env.USER_SERVICE;
+const host = 'user-service';
+const PORT = 5000;
 
 const loginUser = async (req: Request, res: Response) => {
   try {
@@ -18,7 +15,7 @@ const loginUser = async (req: Request, res: Response) => {
       password,
     };
     const response: AxiosResponse = await axios.post(
-      `${URL}/api/user/login`,
+      `http://${host}:${PORT}/api/user/login`,
       loginUser,
     );
     return res.status(200).json({ message: response.data });
@@ -43,7 +40,7 @@ const registerUser = async (req: Request, res: Response) => {
     };
 
     const response: AxiosResponse = await axios.post(
-      `${URL}/api/user`,
+      `http://${host}:${PORT}/api/user`,
       newUser,
     );
     return res.status(201).json({ message: response.data });
@@ -62,7 +59,10 @@ const getUsers = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Unauthorized' });
     }
     const config = { headers: { Authorization: `Bearer ${token}` } };
-    const result: AxiosResponse = await axios.get(`${URL}/api/user`, config);
+    const result: AxiosResponse = await axios.get(
+      `http://${host}:${PORT}/api/user`,
+      config,
+    );
     const users: User[] = result.data;
     return res.status(200).json({ users });
   } catch (error) {
@@ -82,7 +82,7 @@ const getUser = async (req: Request, res: Response) => {
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const id: string = req.params.id;
     const result: AxiosResponse = await axios.get(
-      `${URL}/api/user/${id}`,
+      `http://${host}:${PORT}/api/user/${id}`,
       config,
     );
     const user: User = result.data;
@@ -114,7 +114,7 @@ const updateUser = async (req: Request, res: Response) => {
     };
 
     const response: AxiosResponse = await axios.put(
-      `${URL}/api/user/${id}`,
+      `http://${host}:${PORT}/api/user/${id}`,
       updatedFields,
       config,
     );
@@ -136,7 +136,7 @@ const deleteUser = async (req: Request, res: Response) => {
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const id: string = req.params.id;
     const response: AxiosResponse = await axios.delete(
-      `${URL}/api/user/${id}`,
+      `http://${host}:${PORT}/api/user/${id}`,
       config,
     );
     return res.status(204).json({ message: response.data });
