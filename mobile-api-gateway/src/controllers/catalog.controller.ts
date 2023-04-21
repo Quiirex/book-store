@@ -18,7 +18,9 @@ const getBooks = async (_req: Request, res: Response) => {
     return res.status(200).json({ books });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -54,7 +56,9 @@ const getBook = async (req: Request, res: Response) => {
     return res.status(200).json({ book: bookWithReviews });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -93,7 +97,9 @@ const createBook = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -133,7 +139,9 @@ const updateBook = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -144,7 +152,9 @@ const deleteBook = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 

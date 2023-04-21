@@ -24,7 +24,9 @@ const loginUser = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -47,7 +49,9 @@ const registerUser = async (req: Request, res: Response) => {
     return res.status(201).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -63,7 +67,9 @@ const getUsers = async (req: Request, res: Response) => {
     return res.status(200).json({ users });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -83,7 +89,9 @@ const getUser = async (req: Request, res: Response) => {
     return res.status(200).json({ user });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -113,7 +121,9 @@ const updateUser = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -132,7 +142,9 @@ const deleteUser = async (req: Request, res: Response) => {
     return res.status(204).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 

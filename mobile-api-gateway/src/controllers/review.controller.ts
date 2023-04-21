@@ -21,7 +21,9 @@ const getReviewsByAuthorId = async (req: Request, res: Response) => {
     return res.status(200).json({ reviews });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -39,7 +41,9 @@ const deleteReview = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 

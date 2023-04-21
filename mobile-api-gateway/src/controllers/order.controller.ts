@@ -15,7 +15,9 @@ const getOrders = async (_req: Request, res: Response) => {
     return res.status(200).json({ orders });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -27,7 +29,9 @@ const getOrder = async (req: Request, res: Response) => {
     return res.status(200).json({ order });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -60,7 +64,9 @@ const createOrder = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -94,7 +100,9 @@ const updateOrder = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
@@ -107,7 +115,9 @@ const deleteOrder = async (req: Request, res: Response) => {
     return res.status(200).json({ message: response.data });
   } catch (error) {
     console.error(error);
-    return res.status(503).json({ message: 'External API not available' });
+    return res
+      .status(503)
+      .json({ message: 'Fatal error / External API not available' });
   }
 };
 
