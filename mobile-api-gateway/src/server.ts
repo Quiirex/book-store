@@ -42,14 +42,18 @@ const host = '0.0.0.0';
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 
 async function startServer() {
-  await new Promise<void>((resolve, reject) => {
-    httpServer.listen(port, host, () => {
-      const { address, port } = httpServer.address() as AddressInfo;
-      console.log(`Web API Gateway listening on http://${address}:${port}`);
-      resolve();
+  try {
+    await new Promise<void>((resolve, reject) => {
+      httpServer.listen(port, host, () => {
+        const { address, port } = httpServer.address() as AddressInfo;
+        console.log(`Web API Gateway listening on http://${address}:${port}`);
+        resolve();
+      });
+      httpServer.on('error', reject);
     });
-    httpServer.on('error', reject);
-  });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+  }
 }
 
 startServer();
