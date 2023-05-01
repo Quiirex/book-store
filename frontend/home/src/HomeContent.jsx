@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-import { getProducts } from "./products";
-import { addToCart, useLoggedIn } from "cart/cart";
+import { getProducts } from './products';
+import { addToCart, useLoggedIn } from 'cart/cart';
 
 export default function HomeContent() {
   const loggedIn = useLoggedIn();

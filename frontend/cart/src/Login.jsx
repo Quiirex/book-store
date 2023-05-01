@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { login, useLoggedIn } from "./cart";
+import { login, useLoggedIn } from './cart';
 
 export default function Login() {
   const loggedIn = useLoggedIn();
   const [showLogin, setShowLogin] = useState(false);
 
-  const [username, setUsername] = useState("Bine");
-  const [password, setPassword] = useState("123");
+  const [username, setUsername] = useState('Bine');
+  const [password, setPassword] = useState('123');
 
   if (loggedIn) return null;
 
@@ -35,7 +35,7 @@ export default function Login() {
           className="absolute p-5 border-2 border-blue-800 bg-primary rounded-xl "
           style={{
             width: 300,
-            top: "2rem",
+            top: '2rem',
             left: -250,
           }}
         >

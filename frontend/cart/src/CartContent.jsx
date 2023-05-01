@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { cart, clearCart } from "cart/cart";
+import { cart, clearCart } from 'cart/cart';
 
 export default function CartContent() {
   const [items, setItems] = useState([]);
 
   useEffect(
     () => cart.subscribe((value) => setItems(value?.cartItems ?? [])),
-    []
+    [],
   );
 
   return (
@@ -18,9 +18,7 @@ export default function CartContent() {
             <div>{item.quantity}</div>
             <img src={item.image} alt={item.name} className="max-h-6" />
             <div>{item.name}</div>
-            <div className="text-right">
-              {item.quantity * item.price}
-            </div>
+            <div className="text-right">{item.quantity * item.price}</div>
           </React.Fragment>
         ))}
         <div></div>

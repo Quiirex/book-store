@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { cart, clearCart } from "./cart";
-import { currency } from "home/products";
+import { cart, clearCart } from './cart';
+import { currency } from 'home/products';
 
 export default function MiniCart() {
   const [items, setItems] = useState(undefined);
@@ -28,14 +28,14 @@ export default function MiniCart() {
             className="absolute p-5 border-4 border-blue-800 bg-primary rounded-xl "
             style={{
               width: 300,
-              top: "2rem",
+              top: '2rem',
               left: -250,
             }}
           >
             <div
               className="grid gap-3 text-sm"
               style={{
-                gridTemplateColumns: "1fr 3fr 10fr 2fr",
+                gridTemplateColumns: '1fr 3fr 10fr 2fr',
               }}
             >
               {items.map((item) => (
@@ -49,7 +49,9 @@ export default function MiniCart() {
               <div></div>
               <div></div>
               <div></div>
-              <div>Skupaj: {items.reduce((a, v) => a + v.quantity * v.price, 0)}</div>
+              <div>
+                Skupaj: {items.reduce((a, v) => a + v.quantity * v.price, 0)}
+              </div>
             </div>
             <div className="flex">
               <div className="flex-grow">

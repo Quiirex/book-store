@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { getProductById } from "home/products";
-import placeAddToCart from "addtocart/placeAddToCart";
+import { getProductById } from 'home/products';
+import placeAddToCart from 'addtocart/placeAddToCart';
 
 export default function PDPContent() {
   const { id } = useParams();
@@ -27,9 +27,7 @@ export default function PDPContent() {
   if (!product) return null;
 
   return (
-    <a
-      class="block p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-    >
+    <a class="block p-6 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <div className="grid grid-cols-2 gap-5">
         <div>
           <img src={product.image} alt={product.name} />
