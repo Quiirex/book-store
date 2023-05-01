@@ -27,7 +27,7 @@ services:
     image: quiirex/web-api-gateway:v1
     container_name: web-api-gateway
     ports:
-      - '3000:3000'
+      - '8080:3000'
     restart: always
     depends_on:
       - catalog-service

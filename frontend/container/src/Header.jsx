@@ -9,10 +9,10 @@ export default function Header() {
     <div className="p-5 bg-primary text-text-base text-3xl font-bold">
       <div className="flex">
         <div className="flex-grow flex">
-          <Link to="/">Sklenite zavarovanje</Link>
+          <Link to="/">Catalog</Link>
           <div className="mx-5">|</div>
           <Link id="cart" to="/cart">
-            Izbrani paketi
+            Checkout
           </Link>
         </div>
         <div className="flex-end relative">
