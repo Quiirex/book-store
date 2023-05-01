@@ -4,6 +4,6 @@ import ReactDOM from 'react-dom';
 import 'remixicon/fonts/remixicon.css';
 import './index.scss';
 
-import MainLayout from 'home/MainLayout';
+import MainLayout from 'container/MainLayout';
 
 ReactDOM.render(<MainLayout />, document.getElementById('app'));

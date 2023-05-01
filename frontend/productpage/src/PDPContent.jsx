@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getProductById } from 'home/products';
+import { getProductById } from 'container/products';
 import placeAddToCart from 'addtocart/placeAddToCart';
 
 export default function PDPContent() {

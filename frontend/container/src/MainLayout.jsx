@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'remixicon/fonts/remixicon.css';
 import './index.scss';
 
-import Header from 'home/Header';
-import Footer from 'home/Footer';
+import Header from 'container/Header';
+import Footer from 'container/Footer';
 import PDPContent from 'pdp/PDPContent';
-import HomeContent from 'home/HomeContent';
+import HomeContent from 'container/HomeContent';
 import CartContent from 'cart/CartContent';
 
 export default function MainLayout() {

@@ -1,18 +1,18 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import MiniCart from 'cart/MiniCart';
-import Login from 'cart/Login';
+import MiniCart from "cart/MiniCart";
+import Login from "cart/Login";
 
 export default function Header() {
   return (
     <div className="p-5 bg-primary text-text-base text-3xl font-bold">
       <div className="flex">
         <div className="flex-grow flex">
-          <Link to="/">Catalog</Link>
+          <Link to="/">Sklenite zavarovanje</Link>
           <div className="mx-5">|</div>
           <Link id="cart" to="/cart">
-            Checkout
+            Izbrani paketi
           </Link>
         </div>
         <div className="flex-end relative">

@@ -4,13 +4,13 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      primary: '#036079',
-      'text-base': 'white',
-      'text-base-dark': 'black',
+      'primary': '#036079',
+      "text-base": "white",
+      "text-base-dark": "black",
     },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-};
+}
