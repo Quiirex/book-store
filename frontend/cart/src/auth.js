@@ -32,15 +32,18 @@ export const logout = () => {
   jwt.next(null);
 };
 
-export const register = (email, password) =>
+export const register = (first_name, last_name, email, password, address) =>
   fetch(`${API_SERVER}/user/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      first_name,
+      last_name,
       email,
       password,
+      address,
     }),
   }).then((res) => res.json());
 

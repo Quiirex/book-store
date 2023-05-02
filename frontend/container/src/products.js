@@ -6,7 +6,9 @@ export const getProducts = () =>
     .then((data) => data.books);
 
 export const getProductById = (id) =>
-  fetch(`${API_SERVER}/book/${id}`).then((res) => res.json());
+  fetch(`${API_SERVER}/book/${id}`)
+    .then((res) => res.json())
+    .then((data) => data.book);
 
 export const currency = new Intl.NumberFormat('de-DE', {
   style: 'currency',

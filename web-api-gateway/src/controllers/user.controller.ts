@@ -40,7 +40,7 @@ const registerUser = async (req: Request, res: Response) => {
     };
 
     const response: AxiosResponse = await axios.post(
-      `http://${host}:${PORT}/api/user`,
+      `http://${host}:${PORT}/api/user/register`,
       newUser,
     );
     return res.status(201).json({ message: response.data });

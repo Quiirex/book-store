@@ -1,6 +1,7 @@
 import { createEffect, createSignal, Show } from 'solid-js';
 
-import { jwt, addToCart } from 'cart/auth';
+import { jwt } from 'cart/auth';
+import { addToCart } from 'cart/cart';
 
 export default ({ id, title, price, isbn }) => {
   const [loggedIn, setLoggedIn] = createSignal(false);

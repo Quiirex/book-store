@@ -30,7 +30,7 @@ export default function MiniCart() {
       {showCart && (
         <>
           <div
-            className="absolute p-5 border-4 border-blue-800 rounded-xl bg-primary"
+            className="absolute p-5 border-4 border-white rounded-xl bg-primary text-black"
             style={{
               width: 300,
               top: '2rem',
@@ -70,13 +70,13 @@ export default function MiniCart() {
                 €
               </div>
             </div>
-            <div className="flex">
+            <div className="flex mt-2">
               <div className="flex-grow">
                 <button
                   id="clearcart"
-                  className="bg-white border border-green-800 text-green-800 py-2 px-5 rounded-md text-sm"
+                  className="bg-white border border-black text-black hover:bg-primary hover:text-white py-2 px-5 rounded-md text-sm"
                   onClick={() => {
-                    window.location.href = '/checkout';
+                    window.location.href = '/cart';
                   }}
                 >
                   Checkout
@@ -84,7 +84,7 @@ export default function MiniCart() {
               </div>
               <div className="flex-end">
                 <button
-                  className="bg-green-900 text-white py-2 px-5 rounded-md text-sm"
+                  className="bg-white border border-black text-black hover:bg-primary hover:text-white py-2 px-5 rounded-md text-sm"
                   onClick={clearCart}
                 >
                   Clear

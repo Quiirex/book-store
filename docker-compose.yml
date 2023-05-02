@@ -24,7 +24,7 @@ services:
     networks:
       - my-network
   web-api-gateway:
-    image: quiirex/web-api-gateway:v1
+    image: quiirex/web-api-gateway:v2
     container_name: web-api-gateway
     ports:
       - '8080:3000'

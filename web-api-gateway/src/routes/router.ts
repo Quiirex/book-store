@@ -18,6 +18,7 @@ router.get('/user/:id', user_controller.getUser);
 router.put('/user/:id', user_controller.updateUser);
 router.delete('/user/:id', user_controller.deleteUser);
 router.post('/user/login', user_controller.loginUser);
+router.post('/user/register', user_controller.registerUser);
 router.post('/user', user_controller.registerUser);
 
 // order routes

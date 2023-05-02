@@ -54,7 +54,7 @@ export default function Login() {
       </span>
       {showLogin && (
         <div
-          className="absolute p-5 border-2 border-blue-800 bg-primary rounded-xl "
+          className="absolute p-5 border-2 border-white bg-primary rounded-xl"
           style={{
             width: 300,
             top: '2rem',
@@ -77,7 +77,7 @@ export default function Login() {
           />
           <div class="flex justify-between">
             <button
-              className="bg-green-900 border-2 py-2 px-5 rounded-md text-sm mt-5 text-text-base"
+              className="bg-white text-black hover:bg-primary hover:text-white border-2 border-black py-2 px-5 rounded-md text-sm mt-5"
               onClick={() => login(email, password)}
               id="loginbtn"
               title="log in"
@@ -85,7 +85,7 @@ export default function Login() {
               Login
             </button>
             <button
-              className="bg-green-900 border-2 py-2 px-5 rounded-md text-sm mt-5 text-text-base"
+              className="bg-white text-black hover:bg-primary hover:text-white border-2 border-black py-2 px-5 rounded-md text-sm mt-5"
               onClick={() => (window.location.href = '/register')}
               id="registerbtn"
               title="register"
