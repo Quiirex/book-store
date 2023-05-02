@@ -13,12 +13,12 @@ import CartContent from 'cart/CartContent';
 export default function MainLayout() {
   return (
     <Router>
-      <div className="text-3xl mx-auto max-w-6xl">
+      <div className="text-3xl mx-auto h-full w-full flex flex-col min-h-screen">
         <Header />
-        <div className="my-10">
+        <div className="my-10 flex-1">
           <Switch>
             <Route exact path="/" component={HomeContent} />
-            <Route path="/product/:id" component={PDPContent} />
+            <Route path="/book/:id" component={PDPContent} />
             <Route path="/cart" component={CartContent} />
           </Switch>
         </div>

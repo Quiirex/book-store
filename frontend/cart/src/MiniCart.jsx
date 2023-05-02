@@ -1,31 +1,36 @@
 import React, { useEffect, useState } from 'react';
-
 import { cart, clearCart } from './cart';
-import { currency } from 'container/products';
+import { useLoggedIn } from './auth';
 
 export default function MiniCart() {
-  const [items, setItems] = useState(undefined);
+  const [items, setItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
+  const loggedIn = useLoggedIn();
 
   useEffect(() => {
-    setItems(cart.value?.cartItems);
-    return cart.subscribe((c) => {
-      setItems(c?.cartItems);
+    const subscription = cart.subscribe((c) => {
+      setItems(c?.cartItems || []);
     });
+    return () => subscription.unsubscribe();
   }, []);
 
-  if (!items) return null;
+  if (!loggedIn) return null;
+  if (!items.length) return null;
 
   return (
     <>
-      <span onClick={() => setShowCart(!showCart)} id="showcart_span">
-        <i className="ri-shopping-cart-2-fill text-2xl" id="showcart"></i>
-        {items.length}
+      <span
+        onClick={() => setShowCart(!showCart)}
+        id="showcart_span"
+        class="mr-5"
+      >
+        <i className="ri-shopping-cart-2-fill text-xl" id="showcart"></i>
+        {items.reduce((acc, item) => acc + item.quantity, 0)}
       </span>
       {showCart && (
         <>
           <div
-            className="absolute p-5 border-4 border-blue-800 bg-primary rounded-xl "
+            className="absolute p-5 border-4 border-blue-800 rounded-xl bg-primary"
             style={{
               width: 300,
               top: '2rem',
@@ -41,16 +46,28 @@ export default function MiniCart() {
               {items.map((item) => (
                 <React.Fragment key={item.id}>
                   <div>{item.quantity}</div>
-                  <img src={item.image} alt={item.name} className="max-h-6 " />
-                  <div>{item.name}</div>
-                  <div className="text-right">{item.quantity * item.price}</div>
+                  <img
+                    src={
+                      'https://covers.openlibrary.org/b/isbn/' +
+                      item.isbn +
+                      '-L.jpg'
+                    }
+                    alt={item.title}
+                    className="max-h-12"
+                  />
+                  <div>{item.title}</div>
+                  <div className="text-right">
+                    {(item.quantity * item.price).toFixed(2)}€
+                  </div>
                 </React.Fragment>
               ))}
               <div></div>
               <div></div>
               <div></div>
               <div>
-                Skupaj: {items.reduce((a, v) => a + v.quantity * v.price, 0)}
+                Total:{' '}
+                {items.reduce((a, v) => a + v.quantity * v.price, 0).toFixed(2)}
+                €
               </div>
             </div>
             <div className="flex">
@@ -58,9 +75,11 @@ export default function MiniCart() {
                 <button
                   id="clearcart"
                   className="bg-white border border-green-800 text-green-800 py-2 px-5 rounded-md text-sm"
-                  onClick={clearCart}
+                  onClick={() => {
+                    window.location.href = '/checkout';
+                  }}
                 >
-                  Počisti
+                  Checkout
                 </button>
               </div>
               <div className="flex-end">
@@ -68,7 +87,7 @@ export default function MiniCart() {
                   className="bg-green-900 text-white py-2 px-5 rounded-md text-sm"
                   onClick={clearCart}
                 >
-                  Zaključi
+                  Clear
                 </button>
               </div>
             </div>

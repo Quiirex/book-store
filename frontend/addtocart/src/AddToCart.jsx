@@ -1,8 +1,8 @@
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect, createSignal, Show } from 'solid-js';
 
-import { jwt, addToCart } from "cart/cart";
+import { jwt, addToCart } from 'cart/auth';
 
-export default ({ id }) => {
+export default ({ id, title, price, isbn }) => {
   const [loggedIn, setLoggedIn] = createSignal(false);
 
   createEffect(() => {
@@ -14,10 +14,10 @@ export default ({ id }) => {
   return (
     <Show when={loggedIn()}>
       <button
-        onClick={() => addToCart(id)}
+        onClick={() => addToCart(id, title, price, isbn)}
         class="bg-primary text-text-base py-2 px-5 rounded-md text-sm mt-5"
       >
-        Skleni zavarovanje
+        Add to cart
       </button>
     </Show>
   );

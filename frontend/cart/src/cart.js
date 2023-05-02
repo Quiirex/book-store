@@ -1,76 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { BehaviorSubject } from "rxjs";
+import { useEffect, useState } from 'react';
+import { BehaviorSubject } from 'rxjs';
 
-const API_SERVER = "http://localhost:8080";
+export const cart = new BehaviorSubject(getLocalCart());
 
-export const jwt = new BehaviorSubject(null);
-export const cart = new BehaviorSubject(null);
+function getLocalCart() {
+  const localCart = localStorage.getItem('cart');
+  return localCart ? JSON.parse(localCart) : { cartItems: [] };
+}
 
-export const getCart = () =>
-  fetch(`${API_SERVER}/cart`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt.value}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      cart.next(res);
-      return res;
-    });
+function setLocalCart(newCart) {
+  localStorage.setItem('cart', JSON.stringify(newCart));
+  cart.next(newCart);
+}
 
-export const addToCart = (id) =>
-  fetch(`${API_SERVER}/cart`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt.value}`,
-    },
-    body: JSON.stringify({ id }),
-  })
-    .then((res) => res.json())
-    .then(() => {
-      getCart();
-    });
+export const getCart = () => {
+  const localCart = getLocalCart();
+  cart.next(localCart);
+  return Promise.resolve(localCart);
+};
 
-export const clearCart = () =>
-  fetch(`${API_SERVER}/cart`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${jwt.value}`,
-    },
-  })
-    .then((res) => res.json())
-    .then(() => {
-      getCart();
-    });
+export const addToCart = (id, title, price, isbn) => {
+  const localCart = getLocalCart();
+  const cartItems = localCart.cartItems || [];
+  const existingItem = cartItems.find((item) => item.id === id);
 
-export const login = (username, password) =>
-  fetch(`${API_SERVER}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username,
-      password,
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      jwt.next(data.access_token);
-      getCart();
-      return data.access_token;
-    });
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    cartItems.push({ id, title, price, isbn, quantity: 1 });
+  }
 
-export function useLoggedIn() {
-  const [loggedIn, setLoggedIn] = useState(!!jwt.value);
+  setLocalCart({ cartItems });
+};
+
+export const clearCart = () => {
+  localStorage.removeItem('cart');
+  cart.next({ cartItems: [] });
+};
+
+export function useCart() {
+  const [cartItems, setCartItems] = useState(cart.value.cartItems);
   useEffect(() => {
-    setLoggedIn(!!jwt.value);
-    return jwt.subscribe((c) => {
-      setLoggedIn(!!jwt.value);
+    setCartItems(cart.value.cartItems);
+    return cart.subscribe((c) => {
+      setCartItems(c.cartItems);
     });
   }, []);
-  return loggedIn;
+  return [cartItems, addToCart, clearCart];
 }
