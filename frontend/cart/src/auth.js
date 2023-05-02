@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BehaviorSubject } from 'rxjs';
-import { getCart } from './cart';
+import { getCart, clearCart } from './cart';
 
 const API_SERVER = 'http://localhost:8080';
 const JWT = 'jwt';
@@ -29,6 +29,7 @@ export const login = (email, password) =>
 
 export const logout = () => {
   localStorage.removeItem(JWT);
+  clearCart();
   jwt.next(null);
 };
 
