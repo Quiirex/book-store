@@ -19,7 +19,19 @@ export const getCart = () => {
   return Promise.resolve(localCart);
 };
 
-export const addToCart = (id, title, price, isbn) => {
+export const addToCart = (
+  id,
+  title,
+  author,
+  yearOfPublication,
+  isbn,
+  description,
+  genre,
+  language,
+  rating,
+  format,
+  price,
+) => {
   const localCart = getLocalCart();
   const cartItems = localCart.cartItems || [];
   const existingItem = cartItems.find((item) => item.id === id);
@@ -27,7 +39,20 @@ export const addToCart = (id, title, price, isbn) => {
   if (existingItem) {
     existingItem.quantity++;
   } else {
-    cartItems.push({ id, title, price, isbn, quantity: 1 });
+    cartItems.push({
+      id,
+      title,
+      author,
+      yearOfPublication,
+      isbn,
+      description,
+      genre,
+      language,
+      rating,
+      format,
+      price,
+      quantity: 1,
+    });
   }
 
   setLocalCart({ cartItems });

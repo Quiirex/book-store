@@ -15,7 +15,6 @@ export default function MiniCart() {
   }, []);
 
   if (!loggedIn) return null;
-  if (!items.length) return null;
 
   return (
     <>
@@ -34,7 +33,7 @@ export default function MiniCart() {
             style={{
               width: 300,
               top: '2rem',
-              left: -250,
+              left: -265,
             }}
           >
             <div

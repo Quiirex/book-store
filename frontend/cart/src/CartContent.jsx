@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { cart, clearCart } from 'cart/cart';
+import { order } from 'cart/order';
 
 export default function CartContent() {
   const [items, setItems] = useState([]);
@@ -55,7 +56,7 @@ export default function CartContent() {
             <div className="flex-end">
               <button
                 className="border text-white py-2 px-5 rounded-md text-sm"
-                onClick={() => alert('Order placed successfully!')}
+                onClick={() => order(items)}
               >
                 Order Now
               </button>

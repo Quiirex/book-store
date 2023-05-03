@@ -11,8 +11,32 @@ export default function HomeContent() {
   const [loading, setLoading] = useState(true);
 
   const handleAddToCart = useCallback(
-    (id, title, price, isbn) => {
-      addToCart(id, title, price, isbn);
+    (
+      id,
+      title,
+      author,
+      yearOfPublication,
+      isbn,
+      description,
+      genre,
+      language,
+      rating,
+      format,
+      price,
+    ) => {
+      addToCart(
+        id,
+        title,
+        author,
+        yearOfPublication,
+        isbn,
+        description,
+        genre,
+        language,
+        rating,
+        format,
+        price,
+      );
     },
     [addToCart],
   );
@@ -79,8 +103,15 @@ export default function HomeContent() {
                           handleAddToCart(
                             book.id,
                             book.title,
-                            book.price,
+                            book.author,
+                            book.yearOfPublication,
                             book.isbn,
+                            book.description,
+                            book.genre,
+                            book.language,
+                            book.rating,
+                            book.format,
+                            book.price,
                           )
                         }
                         id={`addtocart_${book.id}`}
