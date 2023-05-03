@@ -8,6 +8,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          microservices/user/go/pkg/mod
+          microservices/catalog/.gradle
+          microservices/order/.gradle
+          microservices/review/node_modules
+        key: ${{ runner.os }}-dependencies-${{ hashFiles('**/lockfiles') }}
+        restore-keys: |
+          ${{ runner.os }}-dependencies-
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
