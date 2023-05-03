@@ -8,17 +8,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          microservices/user/go/pkg/mod
-          microservices/catalog/.gradle
-          microservices/order/.gradle
-          microservices/review/node_modules
-        key: ${{ runner.os }}-dependencies-${{ hashFiles('**/lockfiles') }}
-        restore-keys: |
-          ${{ runner.os }}-dependencies-
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
@@ -32,6 +21,13 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '19.x'
+    - name: Cache Go modules
+      uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
     - name: Install User service dependencies
       run: |
         cd microservices/user
@@ -40,6 +36,15 @@ jobs:
       run: |
         cd microservices/user
         go test ./test
+    - name: Cache Java Gradle dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
     - name: Install Catalog service dependencies
       run: |
         cd microservices/catalog
@@ -56,6 +61,13 @@ jobs:
       run: |
         cd microservices/order
         ./gradlew test
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: microservices/review/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('microservices/review/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
     - name: Install Review service dependencies
       run: |
         cd microservices/review
