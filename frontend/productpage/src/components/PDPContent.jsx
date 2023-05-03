@@ -2,11 +2,22 @@ import React, { useState, useEffect, useRef, memo } from 'react';
 import { useParams } from 'react-router-dom';
 import { getProductById } from 'container/products';
 import placeAddToCart from 'addtocart/placeAddToCart';
+import { review, deleteReview } from '../services/review';
+import { useLoggedIn } from 'authentication/auth';
+import jwt_decode from 'jwt-decode';
 
 const PDPContent = memo(() => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [reviewTitle, setReviewTitle] = useState('');
+  const [reviewContent, setReviewContent] = useState('');
   const addToCart = useRef(null);
+  const loggedIn = useLoggedIn();
+
+  const jwt = localStorage.getItem('jwt');
+  if (jwt) {
+    var author_id = jwt_decode(jwt).user_id;
+  }
 
   useEffect(() => {
     if (id) {
@@ -18,8 +29,33 @@ const PDPContent = memo(() => {
 
   useEffect(() => {
     if (addToCart.current && product) {
-      const { id, title, price, isbn } = product;
-      placeAddToCart(addToCart.current, id, title, price, isbn);
+      const {
+        id,
+        title,
+        author,
+        yearOfPublication,
+        isbn,
+        description,
+        genre,
+        language,
+        rating,
+        format,
+        price,
+      } = product;
+      placeAddToCart(
+        addToCart.current,
+        id,
+        title,
+        author,
+        yearOfPublication,
+        isbn,
+        description,
+        genre,
+        language,
+        rating,
+        format,
+        price,
+      );
     }
   }, [product]);
 
@@ -38,6 +74,28 @@ const PDPContent = memo(() => {
     reviews,
     price,
   } = product;
+
+  const handleReviewTitleChange = (event) => {
+    setReviewTitle(event.target.value);
+  };
+
+  const handleReviewContentChange = (event) => {
+    setReviewContent(event.target.value);
+  };
+
+  const handleReviewSubmit = () => {
+    if (loggedIn) {
+      review(reviewTitle, reviewContent, id);
+      setReviewTitle('');
+      setReviewContent('');
+    } else {
+      alert('You must be logged in to write a review.');
+    }
+  };
+
+  const handleReviewDelete = (reviewId) => {
+    deleteReview(reviewId);
+  };
 
   return (
     <article className="mx-4 md:mx-20 bg-background p-6">
@@ -125,6 +183,14 @@ const PDPContent = memo(() => {
                   <div>
                     <h3 className="text-lg font-bold">{review.title}</h3>
                     <p className="text-base md:text-lg">{review.content}</p>
+                    {review.author_id == author_id ? (
+                      <button
+                        className="text-red-500 hover:text-red-700 text-sm border border-black rounded p-1"
+                        onClick={() => handleReviewDelete(review.id)}
+                      >
+                        Remove
+                      </button>
+                    ) : null}
                   </div>
                 </div>
                 <hr class="mt-3" />
@@ -134,9 +200,44 @@ const PDPContent = memo(() => {
         ) : (
           <p class="text-sm mt-5">No reviews for this book yet.</p>
         )}
-        <button className="mt-5 bg-white text-black hover:bg-primary hover:text-white py-2 px-4 rounded border border-black text-base md:text-lg">
-          Write a review
-        </button>
+        <div className="mt-5">
+          <h3 className="text-2xl font-bold mb-2">Write a review</h3>
+          <div className="mb-3">
+            <label
+              htmlFor="reviewTitle"
+              className="block font-bold mb-1 text-lg"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="reviewTitle"
+              value={reviewTitle}
+              onChange={handleReviewTitleChange}
+              className="w-1/2 border border-gray-400 p-2 rounded text-lg"
+            />
+          </div>
+          <div className="mb-3">
+            <label
+              htmlFor="reviewContent"
+              className="block font-bold mb-1 text-lg"
+            >
+              Content
+            </label>
+            <textarea
+              id="reviewContent"
+              value={reviewContent}
+              onChange={handleReviewContentChange}
+              className="w-1/2 border border-gray-400 p-2 rounded text-lg"
+            ></textarea>
+          </div>
+          <button
+            className="bg-white text-black hover:bg-primary hover:text-white py-2 px-4 rounded border border-black text-base md:text-lg"
+            onClick={handleReviewSubmit}
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </article>
   );

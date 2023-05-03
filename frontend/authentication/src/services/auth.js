@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BehaviorSubject } from 'rxjs';
-import { getCart, clearCart } from './cart';
+import { getCart, clearCart } from 'cart/cart';
 
 const API_SERVER = 'http://localhost:8080';
 const JWT = 'jwt';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { login, useLoggedIn, logout } from './auth';
+import { login, useLoggedIn, logout } from '../services/auth';
 
 export default function Login() {
   const loggedIn = useLoggedIn();

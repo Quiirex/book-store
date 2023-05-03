@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { cart, clearCart } from './cart';
-import { useLoggedIn } from './auth';
+import { cart, clearCart } from '../services/cart';
+import { useLoggedIn } from 'authentication/auth';
 
 export default function MiniCart() {
   const [items, setItems] = useState([]);
@@ -21,7 +21,7 @@ export default function MiniCart() {
       <span
         onClick={() => setShowCart(!showCart)}
         id="showcart_span"
-        class="mr-5"
+        className="mr-5"
       >
         <i className="ri-shopping-cart-2-fill text-xl" id="showcart"></i>
         {items.reduce((acc, item) => acc + item.quantity, 0)}

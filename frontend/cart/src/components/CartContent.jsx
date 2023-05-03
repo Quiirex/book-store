@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { cart, clearCart } from 'cart/cart';
-import { order } from 'cart/order';
+import { cart, clearCart } from '../services/cart';
+import { order } from '../services/order';
 
 export default function CartContent() {
   const [items, setItems] = useState([]);

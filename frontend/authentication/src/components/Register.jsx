@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLoggedIn, register } from './auth';
+import { useLoggedIn, register } from '../services/auth';
 
 const Register = () => {
   const loggedIn = useLoggedIn();

@@ -2,14 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import 'remixicon/fonts/remixicon.css';
-import './index.scss';
+import '../index.scss';
 
 import Header from 'container/Header';
 import Footer from 'container/Footer';
 import PDPContent from 'pdp/PDPContent';
 import HomeContent from 'container/HomeContent';
 import CartContent from 'cart/CartContent';
-import Register from 'cart/Register';
+import Register from 'authentication/Register';
 
 export default function MainLayout() {
   return (

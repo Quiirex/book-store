@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getProducts } from './products';
+import { getProducts } from '../services/products';
 import { addToCart } from 'cart/cart';
-import { useLoggedIn } from 'cart/auth';
+import { useLoggedIn } from 'authentication/auth';
 
 export default function HomeContent() {
   const loggedIn = useLoggedIn();
