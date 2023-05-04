@@ -54,7 +54,7 @@ const PDPContent = memo(() => {
         language,
         rating,
         format,
-        price,
+        price
       );
     }
   }, [product]);
