@@ -49,6 +49,56 @@ services:
       - review-service
     networks:
       - my-network
+  addtocart:
+    image: quiirex/addtocart:v1
+    container_name: addtocart
+    ports:
+      - '3003:3003'
+    restart: always
+    depends_on:
+      - web-api-gateway
+    networks:
+      - my-network
+  authentication:
+    image: quiirex/authentication:v1
+    container_name: authentication
+    ports:
+      - '3004:3004'
+    restart: always
+    depends_on:
+      - web-api-gateway
+    networks:
+      - my-network
+  cart:
+    image: quiirex/cart:v1
+    container_name: cart
+    ports:
+      - '3002:3002'
+    restart: always
+    depends_on:
+      - web-api-gateway
+    networks:
+      - my-network
+  container:
+    image: quiirex/container:v1
+    container_name: container
+    ports:
+      - '3000:3000'
+    restart: always
+    depends_on:
+      - web-api-gateway
+    networks:
+      - my-network
+  productpage:
+    image: quiirex/productpage:v1
+    container_name: productpage
+    ports:
+      - '3001:3001'
+    restart: always
+    depends_on:
+      - web-api-gateway
+    networks:
+      - my-network
   review-service:
     image: quiirex/review-service:v2
     container_name: review-service

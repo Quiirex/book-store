@@ -6,6 +6,7 @@
     "build:dev": "webpack --mode development",
     "build:start": "cd dist && PORT=3003 npx serve",
     "start": "webpack serve --no-open --mode development",
+    "start:prod": "webpack serve --no-open --mode production",
     "start:live": "webpack serve --no-open --mode development --live-reload --hot",
     "format": "npx prettier --write ."
   },
