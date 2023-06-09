@@ -15,17 +15,8 @@
 ## O projektu
 
 <p>
-Projekt "Book Store" zajema 3 mikrostoritve in 1 mikro-frontend.
+Projekt "Book Store" zajema 4 mikrostoritve in 5 mikro-frontendov.
 <br/>
-<br/>
-1. Mikrostoritev se imenuje "CatalogService" in je odgovorna za upravljanje kataloga knjig in njihovih podrobnosti, kot so naslov, avtor, opis, slika naslovnice, cena in razpoložljivost.
-<br/>
-<br/>
-2. Mikrostoritev se imenuje "OrderService" in je odgovorna za upravljanje postopka oddaje in izpolnjevanja naročil, vključno z upravljanjem strankine nakupovalne košarice, potrjevanjem plačil in ustvarjanjem računov.
-<br/>
-<br/>
-3. Mikrostoritev se imenuje "UserService" in je odgovorna za upravljanje registracije, avtentikacije in avtorizacije uporabnikov ter upravljanje uporabniških profilov in nastavitev računov.
-</p>
 
 ## CatalogService
 
