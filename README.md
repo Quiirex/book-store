@@ -2,7 +2,7 @@
 
 <br />
 <p align="center">
-  <h1 align="center">Book Store</h1>
+  <h1 align="center">Book Store - Knjigarna</h1>
 
   <p align="center">
     Projekt pri predmetu IT arhitekture
@@ -10,12 +10,11 @@
   </p>
 </p>
 
-<!-- ABOUT THE PROJECT -->
-
 ## O projektu
 
 <p>
-Projekt "Book Store" zajema 4 mikrostoritve in 5 mikro-frontendov.
+Projekt "Book Store" zajema 4 mikrostoritve, 2 API prehoda (gateway) 5 mikro-frontendov, na podlagi katerih demonstrira delovanje totalno decentraliziranega sistema, ki sledi načelom DDD (Domain-Driven Design) - v tem primeru knjigarne.
+Sistem je sestavljen iz 4 mikrostoritev, ki so med seboj popolnoma neodvisne in komunicirajo preko asinhronih sporočil. Vsaka mikrostoritev ima svojo podatkovno bazo (MongoDB, PostgreSQL), ponekod se uporablja orodje Prisma za potrebe ORM. Mikrostoritve so napisane v različnih programskih jezikih in tehnologijah, kar omogoča lažjo primerjavo med njimi. Mikrostoritve so napisane v programskih jezikih Golang, Kotlin in Java. Za komunikacijo med mikrostoritvami se uporablja HTTP protokol in ponekod HTTP/2 protokol (gRPC). Mikrostoritve so pakirane v Docker slike in so na voljo na Docker Hub-u. Mikrofrontend-i so napisani v spletnih ogrodjih React.js in Solid.js in so prav tako pakirani v Docker slike, za medsebojno povezovanje uporabljajo plugin Module Federation orodja Webpack. Med mikrostoritvami in mikro-frontendi poteka vsa komunikacija izključno preko API prehoda (gateway). Za upravljanje z mikrostoritvami se uporablja orkestrator Kubernetes. Rešitev je pripravljena za uvedbo v OpenShift Cluster.
 <br/>
 
 ## CatalogService
@@ -62,6 +61,19 @@ Projekt "Book Store" zajema 4 mikrostoritve in 5 mikro-frontendov.
 | Možnost registracije novega uporabniškega računa                                                                                     | Varni postopki avtentikacije in avtorizacije                           |
 | Možnost preverjanja pristnosti uporabnikov z različnimi metodami, kot so JWT žetoni                                                  | Zmožnost upravljanja velikega števila sočasnih uporabniških sej        |
 | Možnost upravljanja uporabniških profilov, vključno z osebnimi podatki, naslovi za pošiljanje in zaračunavanje ter zgodovino naročil | Hiter odzivni čas za avtentikacijo uporabnikov in upravljanje profilov |
+
+## ReviewService
+
+- Pomožna storitev, ki omogoča uporabnikom, da dodajo ocene in komentarje za knjige.
+
+## Zagon
+
+- Za zagon sistema je potrebno imeti nameščen [Docker](https://www.docker.com/) in [Docker Compose](https://docs.docker.com/compose/).
+
+```bash
+# Zagon celotnega sistema
+docker-compose up
+```
 
 ## Uporabljene tehnologije
 
